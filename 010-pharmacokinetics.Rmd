@@ -1,0 +1,31 @@
+# Pharmacokinetics
+
+## PK01.R
+
+```{r, code = readLines('R/PK01.R')}
+```
+
+## PK02.R
+
+```{r, code = readLines('R/PK02.R')}
+```
+
+## PK03.R
+
+```{r, code = readLines('R/PK03.R')}
+```
+
+## PK04.R
+
+```{r, code = readLines('R/PK04.R')}
+```
+
+## PK05.R
+
+```{r, code = readLines('R/PK05.R')}
+```
+
+## PK06.R
+
+```{r, code = readLines('R/PK06.R')}
+```
