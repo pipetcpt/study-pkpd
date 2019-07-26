@@ -1,0 +1,88 @@
+---
+title: "PK01"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+library(dplyr)
+library(PKPDmisc)
+
+pk01 <- read.csv('data/PK01.csv', header = T, stringsAsFactors = F)
+head(pk01)
+str(pk01)
+pk01 <- pk01 %>%
+  mutate_at(c('Time', 'Conc'), as.numeric)
+pk01 <- pk01[-1, ]
+
+# pk01$Time = pk01$Time/60
+```
+
+**Plotting  
+
+```{r cars}
+library(ggplot2)
+pk01 %>%
+  ggplot(., aes(x = Time, y = Conc, col = as.factor(Subject))) +
+  geom_point() +
+  geom_line() +
+  geom_smooth(method = 'lm', size = 0.2, alpha = 0.3) +
+  scale_y_continuous(trans = 'log10')
+?geom_smooth
+```
+
+** ini_parameter (V) 
+
+```{r pressure, echo=FALSE}
+
+y.intercept <- function(x){
+  lm.01 <- lm(x$Conc ~ x$Time)
+  summary(lm.01)$coef[1, 'Estimate']
+}
+
+for(i in 1: pk01$Subject[nrow(pk01)]) {
+  result <- pk01 %>%
+    subset(., Subject == i) %>%
+    y.intercept()
+  print(result)
+  assign(paste0('init_volume',i), 10/result * 1000)
+  
+}
+)
+
+## Dose : mg, Conc : ug/L -> Dose / conc * 1000 = Volume (L)
+
+```
+
+*** init_parameter (K)
+
+```{r pressure, echo=FALSE}
+
+y.intercept2 <- function(x){
+  x1 <- tail(x, n = 3)
+  x1$Conc <- log(x1$Conc)
+  lm.01 <- lm(x1$Conc ~ x1$Time)
+  summary(lm.01)$coef[2, 'Estimate']
+}
+
+for(i in 1: pk01$Subject[nrow(pk01)]) {
+  result <- pk01 %>%
+    subset(., Subject == i) %>%
+    y.intercept2()
+  print(result)
+  assign(paste0('terminal_slope',i), result)
+  
+}
+)
+
+```
+
+*** init_parameter (CL)
+
+```{r}
+result2 <- pk01 %>%
+    group_by(Subject) %>%
+    summarize(auc = auc_inf(Time, Conc))
+
+result2$init_cl = 10 / result2$auc   
+result2
+```

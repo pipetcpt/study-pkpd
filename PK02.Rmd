@@ -1,0 +1,65 @@
+---
+title: "PK02"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+pk02 <- read.csv('data/PK02.csv', header = T, stringsAsFactors = F)
+head(pk02)
+pk02 <- pk02 %>%
+  mutate_at(c('Time', 'Cp'), as.numeric)
+pk02 <- pk02[-1, ]
+
+```
+
+
+
+```{r cars}
+library(ggplot2)
+pk02 %>%
+  ggplot(., aes(x = Time, y = Cp)) +
+  geom_point() +
+  geom_line() +
+  scale_y_continuous(trans = 'log10') +
+  theme_bw()
+
+```
+
+***Init_value (V)
+
+```{r pressure, echo=FALSE}
+
+init_value_v = Dose / max(pk02$Cp) 
+
+```
+
+*** Init_value (ka) / Residual plotting
+
+```{r}
+y.intercept2 <- function(x){
+  x1 <- tail(x, n = 3)
+  x1$Cp <- log(x1$Cp)
+  lm.01 <- lm(x1$Cp ~ x1$Time)
+  fit <- summary(lm.01)$coef[, 'Estimate']
+  fit
+}
+
+pk02$fitconc = y.intercept2(pk02)[2] * pk02$Time + y.intercept2(pk02)[1]
+pk02$fitconc = exp(pk02$fitconc)
+pk02$resi = pk02$fitconc - pk02$Cp
+
+init_ka = log(pk02$resi[1]) - log(pk02$resi[2])/(pk02$Time[1] - pk02$Time[2])
+
+```
+
+```{r}
+pk02 %>%
+  ggplot(., aes(x= Time, y = Cp)) +
+  geom_line(colour = 'brown')+
+  geom_point(colour = 'brown') +
+  geom_line(aes(x = Time, y = fitconc), colour = 'orange')+
+  geom_point(aes(x = Time, y = fitconc), colour = 'orange') +
+  geom_line(aes(x = Time, y = resi), color = 'red', alpha = 0.5) +
+  geom_point(aes(x = Time, y = resi), color = 'red', alpha = 0.5)+
+  scale_y_continuous(trans = 'log10')
+```
