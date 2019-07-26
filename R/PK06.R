@@ -1,7 +1,14 @@
+library(tidyverse)
 require(wnl)
 
 dPK06 = read.csv("data/PK06.csv", skip=1)
 colnames(dPK06) = c("TIME", "DV", "CMT") ; dPK06
+
+# concentration-time plot
+dPK06 %>% 
+  filter(CMT %in% c(1,2)) %>% 
+  ggplot(aes(x=TIME, y=DV, group = CMT, color = as.factor(CMT))) +
+  geom_line()
 
 Div = 12500
 Dpo = 25000
