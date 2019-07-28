@@ -33,10 +33,11 @@ init_value_v = Dose / max(pk02$Cp)
 
 ```
 
-*** Init_value (ka) / Residual plotting
+*** Init_value(K)
 
-```{r}
-y.intercept2 <- function(x){
+```{r pressure, echo=FALSE}
+
+Reg <- function(x){
   x1 <- tail(x, n = 3)
   x1$Cp <- log(x1$Cp)
   lm.01 <- lm(x1$Cp ~ x1$Time)
@@ -44,7 +45,25 @@ y.intercept2 <- function(x){
   fit
 }
 
-pk02$fitconc = y.intercept2(pk02)[2] * pk02$Time + y.intercept2(pk02)[1]
+Reg(pk02)[2]
+
+```
+*** Init_value(CL/F)
+
+```{r}
+Dose <- 10
+AUC <- auc_inf(pk02$Time, pk02$Cp)
+AUC
+AUC$CL_F = Dose / AUC   
+result2
+
+```
+
+*** Init_value (ka) / Residual plotting
+
+```{r}
+
+pk02$fitconc = Reg(pk02)[2] * pk02$Time + Reg(pk02)[1]
 pk02$fitconc = exp(pk02$fitconc)
 pk02$resi = pk02$fitconc - pk02$Cp
 
