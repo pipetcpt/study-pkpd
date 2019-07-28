@@ -13,7 +13,7 @@ str(pk01)
 pk01 <- pk01 %>%
   mutate_at(c('Time', 'Conc'), as.numeric)
 pk01 <- pk01[-1, ]
-
+pk01
 # pk01$Time = pk01$Time/60
 ```
 
@@ -26,8 +26,9 @@ pk01 %>%
   geom_point() +
   geom_line() +
   geom_smooth(method = 'lm', size = 0.2, alpha = 0.3) +
-  scale_y_continuous(trans = 'log10')
-?geom_smooth
+  scale_y_continuous(trans = 'log10') +
+  theme_bw()
+
 ```
 
 ** ini_parameter (V) 
@@ -47,7 +48,7 @@ for(i in 1: pk01$Subject[nrow(pk01)]) {
   assign(paste0('init_volume',i), 10/result * 1000)
   
 }
-)
+
 
 ## Dose : mg, Conc : ug/L -> Dose / conc * 1000 = Volume (L)
 
@@ -72,7 +73,7 @@ for(i in 1: pk01$Subject[nrow(pk01)]) {
   assign(paste0('terminal_slope',i), result)
   
 }
-)
+
 
 ```
 

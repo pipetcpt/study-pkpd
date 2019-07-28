@@ -59,7 +59,7 @@ result2
 
 ```
 
-*** Init_value (ka) / Residual plotting
+*** Init_value (ka) 
 
 ```{r}
 
@@ -68,8 +68,11 @@ pk02$fitconc = exp(pk02$fitconc)
 pk02$resi = pk02$fitconc - pk02$Cp
 
 init_ka = log(pk02$resi[1]) - log(pk02$resi[2])/(pk02$Time[1] - pk02$Time[2])
+init_ka
 
 ```
+
+*** Residual plot 
 
 ```{r}
 pk02 %>%
