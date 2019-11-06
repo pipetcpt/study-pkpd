@@ -1,6 +1,6 @@
 ---
-title: "R로 하는 약동학 모델링"
-author: "한성필"
+title: "R로 하는 약동학, 약력학 모델링"
+author: "배균섭, 한성필"
 date: "`r Sys.Date()`"
 knit: "bookdown::render_book"
 documentclass: krantz
@@ -31,16 +31,19 @@ opts_chunk$set(warning = FALSE,
                message = FALSE)
 ```
 
-# Introduction {-}
+# 소개 {-}
 
-이 자료는 Johan Gabrielsson과 Dan Weiner의 책,  "Pharmacokinetic and Pharmacodynamic Data Analysis - Concepts and Applications" 5th ed. [@gab]를 풀기 위한 것입니다. 서울아산병원 임상약리학과 배균섭 교수님께서 개발한 `wnl`패키지 [@R-wnl]를 활용하였습니다.
+이 자료는 Johan Gabrielsson과 Dan Weiner의 책,  "Pharmacokinetic and Pharmacodynamic Data Analysis - Concepts and Applications" 5th ed. [@gab]를 풀기 위한 것입니다. 서울아산병원 임상약리학과 배균섭 교수님께서 `wnl`패키지 [@R-wnl]를 개발하였고 기본적인 코드 또한 배교수님께서 작성하셨습니다.
 
 오탈자 신고 등은 [깃허브 저장소](https://github.com/pipetcpt/study-pkpd/issues)에 남겨주십시오.
 
 감사합니다.
 
-2019년 11월  
+2019년 7월  
 가톨릭대학교 약리학교실  
 연구강사 한성필
 
 \mainmatter
+
+
+

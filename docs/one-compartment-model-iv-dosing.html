@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>2 One compartment model - IV dosing | R로 하는 약동학 모델링</title>
+  <meta name="description" content="2 One compartment model - IV dosing | R로 하는 약동학 모델링" />
+  <meta name="generator" content="bookdown 0.14 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="2 One compartment model - IV dosing | R로 하는 약동학 모델링" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://study-pkpd.netlify.com/" />
+  
+  
+  <meta name="github-repo" content="shanmdphd/wnl" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="2 One compartment model - IV dosing | R로 하는 약동학 모델링" />
+  
+  
+  
+
+<meta name="author" content="한성필" />
+
+
+<meta name="date" content="2019-11-06" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="one-compartment-model-oral-dosing.html"/>
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./index.html">PKPD by R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="1" data-path="one-compartment-model-oral-dosing.html"><a href="one-compartment-model-oral-dosing.html"><i class="fa fa-check"></i><b>1</b> One compartment model - oral dosing</a><ul>
+<li class="chapter" data-level="1.1" data-path="one-compartment-model-oral-dosing.html"><a href="one-compartment-model-oral-dosing.html#compartmental-analysis-without-tlag"><i class="fa fa-check"></i><b>1.1</b> Compartmental analysis without Tlag</a></li>
+<li class="chapter" data-level="1.2" data-path="one-compartment-model-oral-dosing.html"><a href="one-compartment-model-oral-dosing.html#compartmental-analysis-with-tlag"><i class="fa fa-check"></i><b>1.2</b> Compartmental analysis with Tlag</a></li>
+<li class="chapter" data-level="1.3" data-path="one-compartment-model-oral-dosing.html"><a href="one-compartment-model-oral-dosing.html#modeling-result"><i class="fa fa-check"></i><b>1.3</b> Modeling Result</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="one-compartment-model-iv-dosing.html"><a href="one-compartment-model-iv-dosing.html"><i class="fa fa-check"></i><b>2</b> One compartment model - IV dosing</a><ul>
+<li class="chapter" data-level="2.1" data-path="one-compartment-model-iv-dosing.html"><a href="one-compartment-model-iv-dosing.html#compartmental-analysis"><i class="fa fa-check"></i><b>2.1</b> Compartmental analysis</a></li>
+<li class="chapter" data-level="2.2" data-path="one-compartment-model-iv-dosing.html"><a href="one-compartment-model-iv-dosing.html#modeling-result-1"><i class="fa fa-check"></i><b>2.2</b> Modeling Result</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R로 하는 약동학 모델링</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="one-compartment-model---iv-dosing" class="section level1">
+<h1><span class="header-section-number">2</span> One compartment model - IV dosing</h1>
+<p><code>wnl</code> 라이브러리를 불러오고 자료를 읽어옵니다. 4명의 IV 투약 후 농도 자료를 불러와 그림을 자료 탐색을 할 수 있습니다.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="one-compartment-model-iv-dosing.html#cb9-1"></a><span class="kw">require</span>(wnl)</span>
+<span id="cb9-2"><a href="one-compartment-model-iv-dosing.html#cb9-2"></a>dPK01 =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/PK01.csv&quot;</span>, <span class="dt">skip=</span><span class="dv">1</span>)</span>
+<span id="cb9-3"><a href="one-compartment-model-iv-dosing.html#cb9-3"></a><span class="kw">colnames</span>(dPK01) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;TIME&quot;</span>, <span class="st">&quot;DV&quot;</span>, <span class="st">&quot;ID&quot;</span>)</span>
+<span id="cb9-4"><a href="one-compartment-model-iv-dosing.html#cb9-4"></a></span>
+<span id="cb9-5"><a href="one-compartment-model-iv-dosing.html#cb9-5"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb9-6"><a href="one-compartment-model-iv-dosing.html#cb9-6"></a><span class="kw">ggplot</span>(dPK01, <span class="kw">aes</span>(TIME, DV, <span class="dt">group =</span> ID, <span class="dt">color =</span> <span class="kw">as.factor</span>(ID))) <span class="op">+</span></span>
+<span id="cb9-7"><a href="one-compartment-model-iv-dosing.html#cb9-7"></a><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">scale_y_log10</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-6-1.svg" width="672" /></p>
+<ul>
+<li>4명의 피험자 모두 대략적으로 시간에 따른 농도 감소가 단항 지수함수적인 것을 관찰할 수
+있습니다.<br />
+</li>
+<li>피험자 1과 2를 비교하면 2번 피험자가 AUC가 더 작으며, 따라서 청소율이 더 클 것이라
+예상할 수 있으며, Y 절편이 거의 같은 것으로 보아 분포용적이 유사할 것으로 보입니다.<br />
+</li>
+<li>피험자 3과 4의 경우 곡선이 교차하는 형태로 눈으로는 어느 쪽이 AUC가 클지 알기 어렵고, Y절편에
+해당하는 농도가 높은 쪽이 분포용적이 더 작을 것이라 예상할 수 있습니다.</li>
+</ul>
+<p>4명 자료의 NCA 분석을 <code>tblNCA()</code> 함수를 사용해 계산할 수 있습니다.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="one-compartment-model-iv-dosing.html#cb10-1"></a>NonCompart<span class="op">::</span><span class="kw">tblNCA</span>(dPK01, <span class="dt">key=</span><span class="st">&quot;ID&quot;</span>, <span class="dt">colTime=</span><span class="st">&quot;TIME&quot;</span>, <span class="dt">colConc=</span><span class="st">&quot;DV&quot;</span>, <span class="dt">dose=</span><span class="dv">10</span>, <span class="dt">adm=</span><span class="st">&quot;Bolus&quot;</span>)</span></code></pre></div>
+<div class="kable-table">
+<table>
+<thead>
+<tr class="header">
+<th align="right">ID</th>
+<th align="right">b0</th>
+<th align="right">CMAX</th>
+<th align="right">CMAXD</th>
+<th align="right">TMAX</th>
+<th align="right">TLAG</th>
+<th align="right">CLST</th>
+<th align="right">CLSTP</th>
+<th align="right">TLST</th>
+<th align="right">LAMZHL</th>
+<th align="right">LAMZ</th>
+<th align="right">LAMZLL</th>
+<th align="right">LAMZUL</th>
+<th align="right">LAMZNPT</th>
+<th align="right">CORRXY</th>
+<th align="right">R2</th>
+<th align="right">R2ADJ</th>
+<th align="right">AUCLST</th>
+<th align="right">AUCALL</th>
+<th align="right">AUCIFO</th>
+<th align="right">AUCIFOD</th>
+<th align="right">AUCIFP</th>
+<th align="right">AUCIFPD</th>
+<th align="right">AUCPEO</th>
+<th align="right">AUCPEP</th>
+<th align="right">AUMCLST</th>
+<th align="right">AUMCIFO</th>
+<th align="right">AUMCIFP</th>
+<th align="right">AUMCPEO</th>
+<th align="right">AUMCPEP</th>
+<th align="right">C0</th>
+<th align="right">AUCPBEO</th>
+<th align="right">AUCPBEP</th>
+<th align="right">VZO</th>
+<th align="right">VZP</th>
+<th align="right">CLO</th>
+<th align="right">CLP</th>
+<th align="right">MRTIVLST</th>
+<th align="right">MRTIVIFO</th>
+<th align="right">MRTIVIFP</th>
+<th align="right">VSSO</th>
+<th align="right">VSSP</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">6.918914</td>
+<td align="right">920</td>
+<td align="right">92.0</td>
+<td align="right">10</td>
+<td align="right">NA</td>
+<td align="right">200</td>
+<td align="right">211.19414</td>
+<td align="right">150</td>
+<td align="right">66.38766</td>
+<td align="right">0.0104409</td>
+<td align="right">10</td>
+<td align="right">150</td>
+<td align="right">10</td>
+<td align="right">-0.9943381</td>
+<td align="right">0.9887083</td>
+<td align="right">0.9872969</td>
+<td align="right">77590.00</td>
+<td align="right">77590.00</td>
+<td align="right">96745.43</td>
+<td align="right">9674.543</td>
+<td align="right">97817.57</td>
+<td align="right">9781.757</td>
+<td align="right">19.799828</td>
+<td align="right">20.67887</td>
+<td align="right">4337000</td>
+<td align="right">9044967</td>
+<td align="right">9308475</td>
+<td align="right">52.05068</td>
+<td align="right">53.40805</td>
+<td align="right">1058.0000</td>
+<td align="right">10.222705</td>
+<td align="right">10.110658</td>
+<td align="right">9.899914</td>
+<td align="right">9.791405</td>
+<td align="right">0.1033641</td>
+<td align="right">0.1022311</td>
+<td align="right">55.89638</td>
+<td align="right">93.49244</td>
+<td align="right">95.16158</td>
+<td align="right">9.663758</td>
+<td align="right">9.728475</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">6.934162</td>
+<td align="right">850</td>
+<td align="right">85.0</td>
+<td align="right">10</td>
+<td align="right">NA</td>
+<td align="right">42</td>
+<td align="right">45.17696</td>
+<td align="right">150</td>
+<td align="right">33.28625</td>
+<td align="right">0.0208238</td>
+<td align="right">10</td>
+<td align="right">150</td>
+<td align="right">10</td>
+<td align="right">-0.9950967</td>
+<td align="right">0.9902174</td>
+<td align="right">0.9889946</td>
+<td align="right">48374.13</td>
+<td align="right">48374.13</td>
+<td align="right">50391.05</td>
+<td align="right">5039.105</td>
+<td align="right">50543.61</td>
+<td align="right">5054.361</td>
+<td align="right">4.002536</td>
+<td align="right">4.29230</td>
+<td align="right">1967000</td>
+<td align="right">2366394</td>
+<td align="right">2396605</td>
+<td align="right">16.87776</td>
+<td align="right">17.92557</td>
+<td align="right">1146.8254</td>
+<td align="right">19.813295</td>
+<td align="right">19.753490</td>
+<td align="right">9.529848</td>
+<td align="right">9.501083</td>
+<td align="right">0.1984480</td>
+<td align="right">0.1978489</td>
+<td align="right">40.66223</td>
+<td align="right">46.96061</td>
+<td align="right">47.41658</td>
+<td align="right">9.319237</td>
+<td align="right">9.381321</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">6.877619</td>
+<td align="right">800</td>
+<td align="right">80.0</td>
+<td align="right">10</td>
+<td align="right">NA</td>
+<td align="right">60</td>
+<td align="right">56.80923</td>
+<td align="right">150</td>
+<td align="right">36.63672</td>
+<td align="right">0.0189195</td>
+<td align="right">10</td>
+<td align="right">150</td>
+<td align="right">10</td>
+<td align="right">-0.9984467</td>
+<td align="right">0.9968957</td>
+<td align="right">0.9965077</td>
+<td align="right">48430.88</td>
+<td align="right">48430.88</td>
+<td align="right">51602.22</td>
+<td align="right">5160.222</td>
+<td align="right">51433.57</td>
+<td align="right">5143.357</td>
+<td align="right">6.145738</td>
+<td align="right">5.83799</td>
+<td align="right">2077250</td>
+<td align="right">2720574</td>
+<td align="right">2686362</td>
+<td align="right">23.64661</td>
+<td align="right">22.67423</td>
+<td align="right">941.1765</td>
+<td align="right">16.871139</td>
+<td align="right">16.926460</td>
+<td align="right">10.242896</td>
+<td align="right">10.276482</td>
+<td align="right">0.1937901</td>
+<td align="right">0.1944256</td>
+<td align="right">42.89102</td>
+<td align="right">52.72203</td>
+<td align="right">52.22974</td>
+<td align="right">10.217007</td>
+<td align="right">10.154796</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">6.207537</td>
+<td align="right">465</td>
+<td align="right">46.5</td>
+<td align="right">10</td>
+<td align="right">NA</td>
+<td align="right">120</td>
+<td align="right">117.19292</td>
+<td align="right">150</td>
+<td align="right">72.01703</td>
+<td align="right">0.0096248</td>
+<td align="right">10</td>
+<td align="right">150</td>
+<td align="right">10</td>
+<td align="right">-0.9971818</td>
+<td align="right">0.9943716</td>
+<td align="right">0.9936681</td>
+<td align="right">39677.81</td>
+<td align="right">39677.81</td>
+<td align="right">52145.65</td>
+<td align="right">5214.565</td>
+<td align="right">51853.99</td>
+<td align="right">5185.399</td>
+<td align="right">23.909634</td>
+<td align="right">23.48167</td>
+<td align="right">2245250</td>
+<td align="right">5410815</td>
+<td align="right">5336766</td>
+<td align="right">58.50441</td>
+<td align="right">57.92864</td>
+<td align="right">540.5625</td>
+<td align="right">9.641865</td>
+<td align="right">9.696095</td>
+<td align="right">19.924695</td>
+<td align="right">20.036761</td>
+<td align="right">0.1917706</td>
+<td align="right">0.1928492</td>
+<td align="right">56.58704</td>
+<td align="right">103.76352</td>
+<td align="right">102.91908</td>
+<td align="right">19.898788</td>
+<td align="right">19.847860</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="one-compartment-model-iv-dosing.html#cb11-1"></a>IDs =<span class="st"> </span><span class="kw">unique</span>(dPK01[,<span class="st">&quot;ID&quot;</span>])</span>
+<span id="cb11-2"><a href="one-compartment-model-iv-dosing.html#cb11-2"></a>nID =<span class="st"> </span><span class="kw">length</span>(IDs)</span>
+<span id="cb11-3"><a href="one-compartment-model-iv-dosing.html#cb11-3"></a>DOSE =<span class="st"> </span><span class="dv">10000</span> <span class="co"># ug</span></span></code></pre></div>
+<div id="compartmental-analysis" class="section level2">
+<h2><span class="header-section-number">2.1</span> Compartmental analysis</h2>
+<p>V, K만 있으면 단항 지수함수적 농도 감소를 보이는 IV dosing의 농도를 나타낼 수 있으므로 아래와 같이 간단한 함수를 만들 수 있습니다.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="one-compartment-model-iv-dosing.html#cb12-1"></a>fPK01 =<span class="st"> </span><span class="cf">function</span>(THETA) <span class="co"># Prediction function</span></span>
+<span id="cb12-2"><a href="one-compartment-model-iv-dosing.html#cb12-2"></a>{</span>
+<span id="cb12-3"><a href="one-compartment-model-iv-dosing.html#cb12-3"></a>  V  =<span class="st"> </span>THETA[<span class="dv">1</span>]</span>
+<span id="cb12-4"><a href="one-compartment-model-iv-dosing.html#cb12-4"></a>  K  =<span class="st"> </span>THETA[<span class="dv">2</span>]</span>
+<span id="cb12-5"><a href="one-compartment-model-iv-dosing.html#cb12-5"></a>  Cp =<span class="st"> </span>DOSE<span class="op">/</span>V<span class="op">*</span><span class="kw">exp</span>(<span class="op">-</span>K<span class="op">*</span>TIME)  <span class="co"># External DOSE, TIME, eq 1:2</span></span>
+<span id="cb12-6"><a href="one-compartment-model-iv-dosing.html#cb12-6"></a>  <span class="kw">return</span>(Cp)</span>
+<span id="cb12-7"><a href="one-compartment-model-iv-dosing.html#cb12-7"></a>}</span></code></pre></div>
+<p>여러명의 자료를 분석하기 위해 <code>for</code> 함수를 사용하였습니다. 복잡해보이지만 <code>nlr</code> 함수를 사용하는 것이 핵심입니다.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="one-compartment-model-iv-dosing.html#cb13-1"></a>Result =<span class="st"> </span><span class="kw">vector</span>()</span>
+<span id="cb13-2"><a href="one-compartment-model-iv-dosing.html#cb13-2"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nID) {</span>
+<span id="cb13-3"><a href="one-compartment-model-iv-dosing.html#cb13-3"></a>  cID =<span class="st"> </span>IDs[i]</span>
+<span id="cb13-4"><a href="one-compartment-model-iv-dosing.html#cb13-4"></a>  Data =<span class="st"> </span>dPK01[dPK01<span class="op">$</span>ID <span class="op">==</span><span class="st"> </span>cID,]</span>
+<span id="cb13-5"><a href="one-compartment-model-iv-dosing.html#cb13-5"></a>  TIME =<span class="st"> </span>dPK01[dPK01<span class="op">$</span>ID <span class="op">==</span><span class="st"> </span>cID,<span class="st">&quot;TIME&quot;</span>]</span>
+<span id="cb13-6"><a href="one-compartment-model-iv-dosing.html#cb13-6"></a>  Res =<span class="st"> </span><span class="kw">nlr</span>(fPK01, Data, <span class="dt">pNames=</span><span class="kw">c</span>(<span class="st">&quot;V&quot;</span>, <span class="st">&quot;k&quot;</span>), <span class="dt">IE=</span><span class="kw">c</span>(<span class="dv">20</span>, <span class="fl">0.2</span>),</span>
+<span id="cb13-7"><a href="one-compartment-model-iv-dosing.html#cb13-7"></a>            <span class="dt">SecNames=</span><span class="kw">c</span>(<span class="st">&quot;CL&quot;</span>, <span class="st">&quot;AUC&quot;</span>, <span class="st">&quot;AUMC&quot;</span> , <span class="st">&quot;Thalf&quot;</span>, <span class="st">&quot;MRT&quot;</span>), </span>
+<span id="cb13-8"><a href="one-compartment-model-iv-dosing.html#cb13-8"></a>            <span class="dt">SecForms=</span><span class="kw">c</span>(<span class="op">~</span>V<span class="op">*</span>k, <span class="op">~</span>DOSE<span class="op">/</span>V<span class="op">/</span>k, <span class="op">~</span>DOSE<span class="op">/</span>V<span class="op">/</span>k<span class="op">/</span>k, <span class="op">~</span><span class="kw">log</span>(<span class="dv">2</span>)<span class="op">/</span>k, <span class="op">~</span><span class="dv">1</span><span class="op">/</span>k))</span>
+<span id="cb13-9"><a href="one-compartment-model-iv-dosing.html#cb13-9"></a>  Result =<span class="st"> </span><span class="kw">rbind</span>(Result, <span class="kw">cbind</span>(<span class="dt">ID=</span>cID, Res<span class="op">$</span>Est))</span>
+<span id="cb13-10"><a href="one-compartment-model-iv-dosing.html#cb13-10"></a>} ; Result</span></code></pre></div>
+<pre><code>##     ID          V            k AddErrVar  AddErrSD          CL
+## PE   1  9.9784487 0.0102560820 432.73767 20.802348 0.102339788
+## SE   1  0.1834206 0.0003873927 193.52612  4.651545 0.002597160
+## RSE  1  1.8381673 3.7771994487  44.72135 22.360674 2.537781676
+## PE   2  9.8162458 0.0206612797 753.97041 27.458522 0.202816199
+## SE   2  0.3308035 0.0010187679 337.18516  6.139900 0.005970426
+## RSE  2  3.3699589 4.9308074311  44.72127 22.360637 2.943762128
+## PE   3 10.2230093 0.0190412124  77.05108  8.777874 0.194658492
+## SE   3  0.1086744 0.0003052182  34.45832  1.962794 0.001891101
+## RSE  3  1.0630369 1.6029348653  44.72140 22.360699 0.971496569
+## PE   4 19.9471606 0.0098139570  72.19448  8.496733 0.195760575
+## SE   4  0.2954327 0.0003070959  32.28660  1.899942 0.004148218
+## RSE  4  1.4810766 3.1291754937  44.72170 22.360849 2.119026160
+##              AUC         AUMC      Thalf        MRT
+## PE  9.771371e+04 9.527391e+06 67.5840131  97.503121
+## SE  2.479761e+03 5.875882e+05  2.5527830   3.682887
+## RSE 2.537782e+00 6.167356e+00  3.7771994   3.777199
+## PE  4.930573e+04 2.386383e+06 33.5481244  48.399713
+## SE  1.451443e+03 1.763351e+05  1.6541934   2.386497
+## RSE 2.943762e+00 7.389220e+00  4.9308074   4.930807
+## PE  5.137202e+04 2.697939e+06 36.4024709  52.517664
+## SE  4.990774e+02 6.551250e+04  0.5835079   0.841824
+## RSE 9.714966e-01 2.428243e+00  1.6029349   1.602935
+## PE  5.108281e+04 5.205118e+06 70.6287162 101.895699
+## SE  1.082458e+03 2.672940e+05  2.2100965   3.188495
+## RSE 2.119026e+00 5.135215e+00  3.1291755   3.129175</code></pre>
+</div>
+<div id="modeling-result-1" class="section level2">
+<h2><span class="header-section-number">2.2</span> Modeling Result</h2>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="one-compartment-model-iv-dosing.html#cb15-1"></a><span class="co"># Figure 1.1, p 470</span></span>
+<span id="cb15-2"><a href="one-compartment-model-iv-dosing.html#cb15-2"></a><span class="kw">plot</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">type=</span><span class="st">&quot;n&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">160</span>), <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">1000</span>), <span class="dt">log=</span><span class="st">&quot;y&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Time (min)&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Concentration (ug/L)&quot;</span>)</span>
+<span id="cb15-3"><a href="one-compartment-model-iv-dosing.html#cb15-3"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nID) {</span>
+<span id="cb15-4"><a href="one-compartment-model-iv-dosing.html#cb15-4"></a>  cID =<span class="st"> </span>IDs[i]</span>
+<span id="cb15-5"><a href="one-compartment-model-iv-dosing.html#cb15-5"></a>  TIME =<span class="st"> </span>dPK01[dPK01<span class="op">$</span>ID <span class="op">==</span><span class="st"> </span>cID,<span class="st">&quot;TIME&quot;</span>]</span>
+<span id="cb15-6"><a href="one-compartment-model-iv-dosing.html#cb15-6"></a>  <span class="kw">points</span>(TIME, dPK01[dPK01<span class="op">$</span>ID <span class="op">==</span><span class="st"> </span>cID,<span class="st">&quot;DV&quot;</span>], <span class="dt">pch=</span><span class="dv">14</span><span class="op">+</span>i)</span>
+<span id="cb15-7"><a href="one-compartment-model-iv-dosing.html#cb15-7"></a>  cTHETA =<span class="st"> </span>Result[Result[,<span class="st">&quot;ID&quot;</span>]<span class="op">==</span>cID <span class="op">&amp;</span><span class="st"> </span><span class="kw">rownames</span>(Result)<span class="op">==</span><span class="st">&quot;PE&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;V&quot;</span>, <span class="st">&quot;k&quot;</span>)]</span>
+<span id="cb15-8"><a href="one-compartment-model-iv-dosing.html#cb15-8"></a>  <span class="kw">lines</span>(TIME, <span class="kw">fPK01</span>(cTHETA))   </span>
+<span id="cb15-9"><a href="one-compartment-model-iv-dosing.html#cb15-9"></a>}</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-10-1.svg" width="672" /></p>
+
+<div id="refs" class="references">
+<div>
+<p>Bae, Kyun-Seop. 2018. <em>Wnl: Minimization Tool for Pharmacokinetic-Pharmacodynamic Data Analysis</em>. <a href="https://CRAN.R-project.org/package=wnl">https://CRAN.R-project.org/package=wnl</a>.</p>
+</div>
+<div>
+<p>Gabrielsson, Johan. 2016. <em>Pharmacokinetic and Pharmacodynamic Data Analysis : Concepts and Applications</em>. Stockholm: Apotekarsocieteten.</p>
+</div>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="one-compartment-model-oral-dosing.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown/edit/master/inst/examples/001-pharmacokinetics.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "none"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

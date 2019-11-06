@@ -1,6 +1,5 @@
-setwd("D:/Rt/Gab/")
 require(wnl)
-dPK12 = read.csv("PK12.csv", skip=1)
+dPK12 = read.csv("data/PK12.csv", skip=1)
 colnames(dPK12) = c("TIME", "DV") ; dPK12
 
 Dpo = 2500

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>1 Pharmacokinetics | R로 하는 약동학, 약력학 모델링</title>
   <meta name="description" content="1 Pharmacokinetics | R로 하는 약동학, 약력학 모델링" />
-  <meta name="generator" content="bookdown 0.11 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.14 and GitBook 2.6.7" />
 
   <meta property="og:title" content="1 Pharmacokinetics | R로 하는 약동학, 약력학 모델링" />
   <meta property="og:type" content="book" />
@@ -24,14 +24,14 @@
 <meta name="author" content="배균섭, 한성필" />
 
 
-<meta name="date" content="2019-07-26" />
+<meta name="date" content="2019-11-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="index.html">
+<link rel="prev" href="index.html"/>
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -40,6 +40,9 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
 
 
 
@@ -55,7 +58,6 @@ code.sourceCode > span { color: inherit; text-decoration: inherit; }
 code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
@@ -131,7 +133,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./index.html">PKPD by R</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>소개</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a></li>
 <li class="chapter" data-level="1" data-path="pharmacokinetics.html"><a href="pharmacokinetics.html"><i class="fa fa-check"></i><b>1</b> Pharmacokinetics</a><ul>
 <li class="chapter" data-level="1.1" data-path="pharmacokinetics.html"><a href="pharmacokinetics.html#pk01.r"><i class="fa fa-check"></i><b>1.1</b> PK01.R</a></li>
 <li class="chapter" data-level="1.2" data-path="pharmacokinetics.html"><a href="pharmacokinetics.html#pk02.r"><i class="fa fa-check"></i><b>1.2</b> PK02.R</a></li>
@@ -164,7 +166,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">1</span> Pharmacokinetics</h1>
 <div id="pk01.r" class="section level2">
 <h2><span class="header-section-number">1.1</span> PK01.R</h2>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="pharmacokinetics.html#cb1-1"></a><span class="kw">require</span>(wnl)</span>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="pharmacokinetics.html#cb1-1"></a><span class="kw">require</span>(wnl)</span>
 <span id="cb1-2"><a href="pharmacokinetics.html#cb1-2"></a>dPK01 =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/PK01.csv&quot;</span>, <span class="dt">skip=</span><span class="dv">1</span>)</span>
 <span id="cb1-3"><a href="pharmacokinetics.html#cb1-3"></a><span class="kw">colnames</span>(dPK01) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;TIME&quot;</span>, <span class="st">&quot;DV&quot;</span>, <span class="st">&quot;ID&quot;</span>) ; dPK01</span></code></pre></div>
 <div class="kable-table">
@@ -380,7 +382,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 </div>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="pharmacokinetics.html#cb2-1"></a><span class="co">## NCA</span></span>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="pharmacokinetics.html#cb2-1"></a><span class="co">## NCA</span></span>
 <span id="cb2-2"><a href="pharmacokinetics.html#cb2-2"></a><span class="kw">library</span>(NonCompart)</span>
 <span id="cb2-3"><a href="pharmacokinetics.html#cb2-3"></a><span class="kw">tblNCA</span>(dPK01, <span class="dt">key=</span><span class="st">&quot;ID&quot;</span>, <span class="dt">colTime=</span><span class="st">&quot;TIME&quot;</span>, <span class="dt">colConc=</span><span class="st">&quot;DV&quot;</span>, <span class="dt">dose=</span><span class="dv">10</span>, <span class="dt">adm=</span><span class="st">&quot;Bolus&quot;</span>)</span></code></pre></div>
 <div class="kable-table">
@@ -611,7 +613,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 </div>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="pharmacokinetics.html#cb3-1"></a><span class="co">###</span></span>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="pharmacokinetics.html#cb3-1"></a><span class="co">###</span></span>
 <span id="cb3-2"><a href="pharmacokinetics.html#cb3-2"></a></span>
 <span id="cb3-3"><a href="pharmacokinetics.html#cb3-3"></a></span>
 <span id="cb3-4"><a href="pharmacokinetics.html#cb3-4"></a>IDs =<span class="st"> </span><span class="kw">unique</span>(dPK01[,<span class="st">&quot;ID&quot;</span>])</span>
@@ -700,7 +702,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  [7]  31.183581 -18.164548  25.675773 -15.185498
 ## 
 ## $`Elapsed Time`
-## Time difference of 0.03590393 secs
+## Time difference of 0.04687619 secs
 ## 
 ## [1] &quot;### ID = 2 ###&quot;
 ## $Est
@@ -763,7 +765,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  [7]  20.150402 -13.663635  15.041938  -3.929595
 ## 
 ## $`Elapsed Time`
-## Time difference of 0.002991915 secs
+## Time difference of 0.004989147 secs
 ## 
 ## [1] &quot;### ID = 3 ###&quot;
 ## $Est
@@ -826,7 +828,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  [7] -12.962573   8.734698 -10.441723   3.766227
 ## 
 ## $`Elapsed Time`
-## Time difference of 0.004986048 secs
+## Time difference of 0.004957199 secs
 ## 
 ## [1] &quot;### ID = 4 ###&quot;
 ## $Est
@@ -889,7 +891,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  [7]  -7.213658   7.735151  -5.326690   4.973789
 ## 
 ## $`Elapsed Time`
-## Time difference of 0.006982088 secs</code></pre>
+## Time difference of 0.00401783 secs</code></pre>
 <pre><code>##     ID          V            k AddErrVar  AddErrSD          CL
 ## PE   1  9.9784487 0.0102560820 432.73767 20.802348 0.102339788
 ## SE   1  0.1834206 0.0003873927 193.52612  4.651545 0.002597160
@@ -916,7 +918,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## PE  5.108281e+04 5.205118e+06 70.6287162 101.895699
 ## SE  1.082458e+03 2.672940e+05  2.2100965   3.188495
 ## RSE 2.119026e+00 5.135215e+00  3.1291755   3.129175</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="pharmacokinetics.html#cb6-1"></a><span class="co"># Figure 1.1, p 470</span></span>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="pharmacokinetics.html#cb6-1"></a><span class="co"># Figure 1.1, p 470</span></span>
 <span id="cb6-2"><a href="pharmacokinetics.html#cb6-2"></a><span class="kw">plot</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">type=</span><span class="st">&quot;n&quot;</span>, <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">160</span>), <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">1000</span>), <span class="dt">log=</span><span class="st">&quot;y&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Time (min)&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Concentration (ug/L)&quot;</span>)</span>
 <span id="cb6-3"><a href="pharmacokinetics.html#cb6-3"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>nID) {</span>
 <span id="cb6-4"><a href="pharmacokinetics.html#cb6-4"></a>  cID =<span class="st"> </span>IDs[i]</span>
@@ -926,11 +928,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb6-8"><a href="pharmacokinetics.html#cb6-8"></a>  <span class="kw">lines</span>(TIME, <span class="kw">fPK01</span>(cTHETA))   </span>
 <span id="cb6-9"><a href="pharmacokinetics.html#cb6-9"></a>}</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-1-1.svg" width="672" /></p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="pharmacokinetics.html#cb7-1"></a><span class="co">###</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="pharmacokinetics.html#cb7-1"></a><span class="co">###</span></span></code></pre></div>
 </div>
 <div id="pk02.r" class="section level2">
 <h2><span class="header-section-number">1.2</span> PK02.R</h2>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="pharmacokinetics.html#cb8-1"></a><span class="kw">require</span>(wnl)</span>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="pharmacokinetics.html#cb8-1"></a><span class="kw">require</span>(wnl)</span>
 <span id="cb8-2"><a href="pharmacokinetics.html#cb8-2"></a>dPK02 =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/PK02.csv&quot;</span>, <span class="dt">skip=</span><span class="dv">1</span>)</span>
 <span id="cb8-3"><a href="pharmacokinetics.html#cb8-3"></a><span class="kw">colnames</span>(dPK02) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;TIME&quot;</span>, <span class="st">&quot;DV&quot;</span>) ; dPK02</span></code></pre></div>
 <div class="kable-table">
@@ -997,7 +999,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 </div>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="pharmacokinetics.html#cb9-1"></a><span class="co">## NCA</span></span>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="pharmacokinetics.html#cb9-1"></a><span class="co">## NCA</span></span>
 <span id="cb9-2"><a href="pharmacokinetics.html#cb9-2"></a><span class="kw">library</span>(NonCompart)</span>
 <span id="cb9-3"><a href="pharmacokinetics.html#cb9-3"></a><span class="kw">sNCA</span>(dPK02[,<span class="st">&quot;TIME&quot;</span>], dPK02[,<span class="st">&quot;DV&quot;</span>], <span class="dt">dose=</span><span class="dv">100</span>, <span class="dt">doseUnit=</span><span class="st">&quot;ug&quot;</span>, <span class="dt">timeUnit=</span><span class="st">&quot;min&quot;</span>)</span></code></pre></div>
 <pre><code>##            b0          CMAX         CMAXD          TMAX          TLAG 
@@ -1027,7 +1029,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [36] &quot;min&quot;        
 ## attr(,&quot;UsedPoints&quot;)
 ## [1]  7  8  9 10 11 12 13</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="pharmacokinetics.html#cb11-1"></a><span class="co">###</span></span>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="pharmacokinetics.html#cb11-1"></a><span class="co">###</span></span>
 <span id="cb11-2"><a href="pharmacokinetics.html#cb11-2"></a></span>
 <span id="cb11-3"><a href="pharmacokinetics.html#cb11-3"></a>DOSE =<span class="st"> </span><span class="dv">100</span></span>
 <span id="cb11-4"><a href="pharmacokinetics.html#cb11-4"></a></span>
@@ -1100,8 +1102,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [11] -0.03417646 -0.14900858 -0.01510607
 ## 
 ## $`Elapsed Time`
-## Time difference of 0.01099896 secs</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="pharmacokinetics.html#cb13-1"></a><span class="co">#</span></span>
+## Time difference of 0.01399899 secs</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="pharmacokinetics.html#cb13-1"></a><span class="co">#</span></span>
 <span id="cb13-2"><a href="pharmacokinetics.html#cb13-2"></a>fPK02b =<span class="st"> </span><span class="cf">function</span>(THETA) <span class="co"># Prediction function</span></span>
 <span id="cb13-3"><a href="pharmacokinetics.html#cb13-3"></a>{</span>
 <span id="cb13-4"><a href="pharmacokinetics.html#cb13-4"></a>  Ka   =<span class="st"> </span>THETA[<span class="dv">1</span>]</span>
@@ -1180,18 +1182,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [11]  0.075566857 -0.072888748  0.028712575
 ## 
 ## $`Elapsed Time`
-## Time difference of 0.01892114 secs</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="pharmacokinetics.html#cb15-1"></a><span class="co"># Figure 2.3, p 480</span></span>
+## Time difference of 0.01395702 secs</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="pharmacokinetics.html#cb15-1"></a><span class="co"># Figure 2.3, p 480</span></span>
 <span id="cb15-2"><a href="pharmacokinetics.html#cb15-2"></a><span class="kw">plot</span>(dPK02[,<span class="st">&quot;TIME&quot;</span>], dPK02[,<span class="st">&quot;DV&quot;</span>], <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">400</span>), <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">2.5</span>), <span class="dt">xlab=</span><span class="st">&quot;Time (min)&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Concentration (ug/L)&quot;</span>, <span class="dt">pch=</span><span class="dv">16</span>)</span>
 <span id="cb15-3"><a href="pharmacokinetics.html#cb15-3"></a>TIME =<span class="st"> </span><span class="dv">0</span><span class="op">:</span><span class="dv">400</span></span>
 <span id="cb15-4"><a href="pharmacokinetics.html#cb15-4"></a><span class="kw">lines</span>(TIME, <span class="kw">fPK02a</span>(r1<span class="op">$</span>Est[<span class="st">&quot;PE&quot;</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]), <span class="dt">lty=</span><span class="dv">2</span>)</span>
 <span id="cb15-5"><a href="pharmacokinetics.html#cb15-5"></a><span class="kw">lines</span>(TIME, <span class="kw">fPK02b</span>(r2<span class="op">$</span>Est[<span class="st">&quot;PE&quot;</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]))</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-2-1.svg" width="672" /></p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="pharmacokinetics.html#cb16-1"></a><span class="co">###</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="pharmacokinetics.html#cb16-1"></a><span class="co">###</span></span></code></pre></div>
 </div>
 <div id="pk03.r" class="section level2">
 <h2><span class="header-section-number">1.3</span> PK03.R</h2>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="pharmacokinetics.html#cb17-1"></a><span class="kw">require</span>(wnl)</span>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="pharmacokinetics.html#cb17-1"></a><span class="kw">require</span>(wnl)</span>
 <span id="cb17-2"><a href="pharmacokinetics.html#cb17-2"></a>dPK03 =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/PK03.csv&quot;</span>, <span class="dt">skip=</span><span class="dv">1</span>)</span>
 <span id="cb17-3"><a href="pharmacokinetics.html#cb17-3"></a><span class="kw">colnames</span>(dPK03) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;TIME&quot;</span>, <span class="st">&quot;DV&quot;</span>) ; dPK03</span></code></pre></div>
 <div class="kable-table">
@@ -1254,7 +1256,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 </div>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="pharmacokinetics.html#cb18-1"></a>DOSE =<span class="st"> </span><span class="dv">20000</span></span>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="pharmacokinetics.html#cb18-1"></a>DOSE =<span class="st"> </span><span class="dv">20000</span></span>
 <span id="cb18-2"><a href="pharmacokinetics.html#cb18-2"></a>TIME =<span class="st"> </span>dPK03[,<span class="st">&quot;TIME&quot;</span>]</span>
 <span id="cb18-3"><a href="pharmacokinetics.html#cb18-3"></a></span>
 <span id="cb18-4"><a href="pharmacokinetics.html#cb18-4"></a>fPK03a =<span class="st"> </span><span class="cf">function</span>(THETA) <span class="co"># Prediction function</span></span>
@@ -1334,8 +1336,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [11]  -9.0623230  -4.9179461
 ## 
 ## $`Elapsed Time`
-## Time difference of 0.01698208 secs</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="pharmacokinetics.html#cb20-1"></a>Resid1 =<span class="st"> </span>e<span class="op">$</span>Residual</span>
+## Time difference of 0.01393414 secs</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="pharmacokinetics.html#cb20-1"></a>Resid1 =<span class="st"> </span>e<span class="op">$</span>Residual</span>
 <span id="cb20-2"><a href="pharmacokinetics.html#cb20-2"></a></span>
 <span id="cb20-3"><a href="pharmacokinetics.html#cb20-3"></a>fPK03b =<span class="st"> </span><span class="cf">function</span>(THETA) <span class="co"># Prediction function</span></span>
 <span id="cb20-4"><a href="pharmacokinetics.html#cb20-4"></a>{</span>
@@ -1409,15 +1411,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [11]  -0.8176705   2.2141713
 ## 
 ## $`Elapsed Time`
-## Time difference of 0.0219121 secs</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="pharmacokinetics.html#cb22-1"></a>Resid2 =<span class="st"> </span>e<span class="op">$</span>Residual</span>
+## Time difference of 0.02294111 secs</code></pre>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="pharmacokinetics.html#cb22-1"></a>Resid2 =<span class="st"> </span>e<span class="op">$</span>Residual</span>
 <span id="cb22-2"><a href="pharmacokinetics.html#cb22-2"></a></span>
 <span id="cb22-3"><a href="pharmacokinetics.html#cb22-3"></a><span class="co"># Figure 3.1 p 484</span></span>
 <span id="cb22-4"><a href="pharmacokinetics.html#cb22-4"></a><span class="kw">plot</span>(dPK03[,<span class="st">&quot;TIME&quot;</span>], dPK03[,<span class="st">&quot;DV&quot;</span>], <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">10</span>), <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">90</span>), <span class="dt">xlab=</span><span class="st">&quot;Time (h)&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Concentration (ug/L)&quot;</span>, <span class="dt">pch=</span><span class="dv">16</span>)</span>
 <span id="cb22-5"><a href="pharmacokinetics.html#cb22-5"></a><span class="kw">lines</span>(TIME, dPK03[,<span class="st">&quot;DV&quot;</span>] <span class="op">-</span><span class="st"> </span>Resid1)</span>
 <span id="cb22-6"><a href="pharmacokinetics.html#cb22-6"></a><span class="kw">lines</span>(TIME, dPK03[,<span class="st">&quot;DV&quot;</span>] <span class="op">-</span><span class="st"> </span>Resid2, <span class="dt">lty=</span><span class="dv">2</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-3-1.svg" width="672" /></p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="pharmacokinetics.html#cb23-1"></a><span class="co">###</span></span>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="pharmacokinetics.html#cb23-1"></a><span class="co">###</span></span>
 <span id="cb23-2"><a href="pharmacokinetics.html#cb23-2"></a></span>
 <span id="cb23-3"><a href="pharmacokinetics.html#cb23-3"></a><span class="co"># or #</span></span>
 <span id="cb23-4"><a href="pharmacokinetics.html#cb23-4"></a><span class="kw">dev.new</span>()</span>
@@ -1428,7 +1430,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="pk04.r" class="section level2">
 <h2><span class="header-section-number">1.4</span> PK04.R</h2>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="pharmacokinetics.html#cb24-1"></a><span class="kw">require</span>(wnl)</span>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="pharmacokinetics.html#cb24-1"></a><span class="kw">require</span>(wnl)</span>
 <span id="cb24-2"><a href="pharmacokinetics.html#cb24-2"></a>dPK04 =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/PK04.csv&quot;</span>, <span class="dt">skip=</span><span class="dv">1</span>)</span>
 <span id="cb24-3"><a href="pharmacokinetics.html#cb24-3"></a><span class="kw">colnames</span>(dPK04) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;TIME&quot;</span>, <span class="st">&quot;DV&quot;</span>) ; dPK04</span></code></pre></div>
 <div class="kable-table">
@@ -1547,7 +1549,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 </div>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="pharmacokinetics.html#cb25-1"></a>DHPK04 =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/PK04-dose.csv&quot;</span>)</span>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="pharmacokinetics.html#cb25-1"></a>DHPK04 =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/PK04-dose.csv&quot;</span>)</span>
 <span id="cb25-2"><a href="pharmacokinetics.html#cb25-2"></a><span class="kw">colnames</span>(DHPK04) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;TIME&quot;</span>, <span class="st">&quot;AMT&quot;</span>) ; DHPK04</span></code></pre></div>
 <div class="kable-table">
 <table>
@@ -1601,7 +1603,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 </div>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="pharmacokinetics.html#cb26-1"></a>fPK04a =<span class="st"> </span><span class="cf">function</span>(THETA) <span class="co"># Eq 4:3</span></span>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="pharmacokinetics.html#cb26-1"></a>fPK04a =<span class="st"> </span><span class="cf">function</span>(THETA) <span class="co"># Eq 4:3</span></span>
 <span id="cb26-2"><a href="pharmacokinetics.html#cb26-2"></a>{</span>
 <span id="cb26-3"><a href="pharmacokinetics.html#cb26-3"></a>  V  =<span class="st"> </span>THETA[<span class="dv">1</span>]</span>
 <span id="cb26-4"><a href="pharmacokinetics.html#cb26-4"></a>  Ka =<span class="st"> </span>THETA[<span class="dv">2</span>]</span>
@@ -1687,8 +1689,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [26]  0.063099636
 ## 
 ## $`Elapsed Time`
-## Time difference of 0.2752652 secs</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="pharmacokinetics.html#cb28-1"></a>r1 =<span class="st"> </span><span class="kw">nlr</span>(fPK04a, dPK04, <span class="dt">pNames=</span><span class="kw">c</span>(<span class="st">&quot;V/F&quot;</span>, <span class="st">&quot;Ka&quot;</span>, <span class="st">&quot;K&quot;</span>), <span class="dt">IE=</span><span class="kw">c</span>(<span class="dv">70</span>, <span class="fl">0.25</span>, <span class="fl">0.1</span>), <span class="dt">Error=</span><span class="st">&quot;POIS&quot;</span>) ; r1</span></code></pre></div>
+## Time difference of 0.1745341 secs</code></pre>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="pharmacokinetics.html#cb28-1"></a>r1 =<span class="st"> </span><span class="kw">nlr</span>(fPK04a, dPK04, <span class="dt">pNames=</span><span class="kw">c</span>(<span class="st">&quot;V/F&quot;</span>, <span class="st">&quot;Ka&quot;</span>, <span class="st">&quot;K&quot;</span>), <span class="dt">IE=</span><span class="kw">c</span>(<span class="dv">70</span>, <span class="fl">0.25</span>, <span class="fl">0.1</span>), <span class="dt">Error=</span><span class="st">&quot;POIS&quot;</span>) ; r1</span></code></pre></div>
 <pre><code>## $Est
 ##           V/F          Ka           K  PoisErrVar   PoisErrSD
 ## PE  56.741937  0.14313883  0.14313803  0.03488885  0.18678558
@@ -1752,10 +1754,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [26]  0.066368608
 ## 
 ## $`Elapsed Time`
-## Time difference of 0.2064481 secs</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="pharmacokinetics.html#cb30-1"></a>condNum1 =<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">max</span>(e<span class="op">$</span>EigenVal)<span class="op">/</span><span class="kw">min</span>(e<span class="op">$</span>EigenVal)) ; condNum1</span></code></pre></div>
+## Time difference of 0.1116741 secs</code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="pharmacokinetics.html#cb30-1"></a>condNum1 =<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">max</span>(e<span class="op">$</span>EigenVal)<span class="op">/</span><span class="kw">min</span>(e<span class="op">$</span>EigenVal)) ; condNum1</span></code></pre></div>
 <pre><code>## [1] 13.54013</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="pharmacokinetics.html#cb32-1"></a><span class="kw">dev.new</span>() ; <span class="kw">plot</span>(e<span class="op">$</span>Residual, <span class="dt">type=</span><span class="st">&quot;o&quot;</span>) ; <span class="kw">abline</span>(<span class="dt">h=</span><span class="dv">0</span>)</span>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="pharmacokinetics.html#cb32-1"></a><span class="kw">dev.new</span>() ; <span class="kw">plot</span>(e<span class="op">$</span>Residual, <span class="dt">type=</span><span class="st">&quot;o&quot;</span>) ; <span class="kw">abline</span>(<span class="dt">h=</span><span class="dv">0</span>)</span>
 <span id="cb32-2"><a href="pharmacokinetics.html#cb32-2"></a><span class="kw">wnl5</span>(fPK04a, dPK04, <span class="dt">pNames=</span><span class="kw">c</span>(<span class="st">&quot;V/F&quot;</span>, <span class="st">&quot;Ka&quot;</span>, <span class="st">&quot;K&quot;</span>), <span class="dt">IE=</span><span class="kw">c</span>(<span class="dv">70</span>, <span class="fl">0.25</span>, <span class="fl">0.1</span>), <span class="dt">Error=</span><span class="st">&quot;POIS&quot;</span>)</span></code></pre></div>
 <pre><code>## $PE
 ##        V/F         Ka          K 
@@ -1808,8 +1810,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [26]  0.055509380
 ## 
 ## $`Elapsed Time`
-## Time difference of 0.1266599 secs</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="pharmacokinetics.html#cb34-1"></a><span class="co">## </span></span>
+## Time difference of 0.05286098 secs</code></pre>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="pharmacokinetics.html#cb34-1"></a><span class="co">## </span></span>
 <span id="cb34-2"><a href="pharmacokinetics.html#cb34-2"></a>fPK04b =<span class="st"> </span><span class="cf">function</span>(THETA) <span class="co"># Eq 4:4</span></span>
 <span id="cb34-3"><a href="pharmacokinetics.html#cb34-3"></a>{</span>
 <span id="cb34-4"><a href="pharmacokinetics.html#cb34-4"></a>  V  =<span class="st"> </span>THETA[<span class="dv">1</span>]</span>
@@ -1904,8 +1906,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [26] -0.098120535
 ## 
 ## $`Elapsed Time`
-## Time difference of 0.2054551 secs</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="pharmacokinetics.html#cb36-1"></a>r2 =<span class="st"> </span><span class="kw">nlr</span>(fPK04b, dPK04, <span class="dt">pNames=</span><span class="kw">c</span>(<span class="st">&quot;V/F&quot;</span>, <span class="st">&quot;Ka&quot;</span>, <span class="st">&quot;K&quot;</span>, <span class="st">&quot;Tlag&quot;</span>), <span class="dt">IE=</span><span class="kw">c</span>(<span class="dv">70</span>, <span class="fl">0.25</span>, <span class="fl">0.1</span>, <span class="dv">1</span>), <span class="dt">LB=</span><span class="kw">c</span>(<span class="dv">50</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>), <span class="dt">Error=</span><span class="st">&quot;C&quot;</span>) ; r2</span></code></pre></div>
+## Time difference of 0.132643 secs</code></pre>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="pharmacokinetics.html#cb36-1"></a>r2 =<span class="st"> </span><span class="kw">nlr</span>(fPK04b, dPK04, <span class="dt">pNames=</span><span class="kw">c</span>(<span class="st">&quot;V/F&quot;</span>, <span class="st">&quot;Ka&quot;</span>, <span class="st">&quot;K&quot;</span>, <span class="st">&quot;Tlag&quot;</span>), <span class="dt">IE=</span><span class="kw">c</span>(<span class="dv">70</span>, <span class="fl">0.25</span>, <span class="fl">0.1</span>, <span class="dv">1</span>), <span class="dt">LB=</span><span class="kw">c</span>(<span class="dv">50</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>), <span class="dt">Error=</span><span class="st">&quot;C&quot;</span>) ; r2</span></code></pre></div>
 <pre><code>## $Est
 ##          V/F          Ka           K       Tlag    AddErrVar   PropErrVar
 ## PE  64.17088  0.19435146  0.12582552 0.72800905  0.005341850 1.948511e-07
@@ -1982,10 +1984,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [26]  0.095000764
 ## 
 ## $`Elapsed Time`
-## Time difference of 0.3829761 secs</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="pharmacokinetics.html#cb38-1"></a>condNum2 =<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">max</span>(e<span class="op">$</span>EigenVal)<span class="op">/</span><span class="kw">min</span>(e<span class="op">$</span>EigenVal)) ; condNum2</span></code></pre></div>
+## Time difference of 0.2802501 secs</code></pre>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="pharmacokinetics.html#cb38-1"></a>condNum2 =<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">max</span>(e<span class="op">$</span>EigenVal)<span class="op">/</span><span class="kw">min</span>(e<span class="op">$</span>EigenVal)) ; condNum2</span></code></pre></div>
 <pre><code>## [1] 39.42374</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="pharmacokinetics.html#cb40-1"></a><span class="kw">dev.new</span>() ; <span class="kw">plot</span>(e<span class="op">$</span>Residual, <span class="dt">type=</span><span class="st">&quot;o&quot;</span>) ; <span class="kw">abline</span>(<span class="dt">h=</span><span class="dv">0</span>)</span>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="pharmacokinetics.html#cb40-1"></a><span class="kw">dev.new</span>() ; <span class="kw">plot</span>(e<span class="op">$</span>Residual, <span class="dt">type=</span><span class="st">&quot;o&quot;</span>) ; <span class="kw">abline</span>(<span class="dt">h=</span><span class="dv">0</span>)</span>
 <span id="cb40-2"><a href="pharmacokinetics.html#cb40-2"></a><span class="co">#wnl5(fPK04b, dPK04, pNames=c(&quot;V/F&quot;, &quot;Ka&quot;, &quot;K&quot;, &quot;Tlag&quot;), IE=c(70, 0.25, 0.1, 1), Error=&quot;POIS&quot;) # fitting failure</span></span>
 <span id="cb40-3"><a href="pharmacokinetics.html#cb40-3"></a><span class="kw">wnl5</span>(fPK04b, dPK04, <span class="dt">pNames=</span><span class="kw">c</span>(<span class="st">&quot;V/F&quot;</span>, <span class="st">&quot;Ka&quot;</span>, <span class="st">&quot;K&quot;</span>, <span class="st">&quot;Tlag&quot;</span>), <span class="dt">IE=</span><span class="kw">c</span>(<span class="dv">70</span>, <span class="fl">0.25</span>, <span class="fl">0.1</span>, <span class="dv">1</span>), <span class="dt">LB=</span><span class="kw">c</span>(<span class="dv">50</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span></code></pre></div>
 <pre><code>## $PE
@@ -2039,8 +2041,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [26]  0.094994622
 ## 
 ## $`Elapsed Time`
-## Time difference of 0.1276579 secs</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="pharmacokinetics.html#cb42-1"></a><span class="co">## </span></span>
+## Time difference of 0.115689 secs</code></pre>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="pharmacokinetics.html#cb42-1"></a><span class="co">## </span></span>
 <span id="cb42-2"><a href="pharmacokinetics.html#cb42-2"></a>fPK04c =<span class="st"> </span><span class="cf">function</span>(THETA) <span class="co"># Eq 4:5</span></span>
 <span id="cb42-3"><a href="pharmacokinetics.html#cb42-3"></a>{</span>
 <span id="cb42-4"><a href="pharmacokinetics.html#cb42-4"></a>  V  =<span class="st"> </span>THETA[<span class="dv">1</span>]</span>
@@ -2125,10 +2127,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [26]  0.066369747
 ## 
 ## $`Elapsed Time`
-## Time difference of 0.09374905 secs</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="pharmacokinetics.html#cb44-1"></a>condNum3 =<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">max</span>(e<span class="op">$</span>EigenVal)<span class="op">/</span><span class="kw">min</span>(e<span class="op">$</span>EigenVal)) ; condNum3</span></code></pre></div>
+## Time difference of 0.07679796 secs</code></pre>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="pharmacokinetics.html#cb44-1"></a>condNum3 =<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">max</span>(e<span class="op">$</span>EigenVal)<span class="op">/</span><span class="kw">min</span>(e<span class="op">$</span>EigenVal)) ; condNum3</span></code></pre></div>
 <pre><code>## [1] 1.789674</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="pharmacokinetics.html#cb46-1"></a><span class="kw">dev.new</span>() ; <span class="kw">plot</span>(e<span class="op">$</span>Residual, <span class="dt">type=</span><span class="st">&quot;o&quot;</span>) ; <span class="kw">abline</span>(<span class="dt">h=</span><span class="dv">0</span>)</span>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="pharmacokinetics.html#cb46-1"></a><span class="kw">dev.new</span>() ; <span class="kw">plot</span>(e<span class="op">$</span>Residual, <span class="dt">type=</span><span class="st">&quot;o&quot;</span>) ; <span class="kw">abline</span>(<span class="dt">h=</span><span class="dv">0</span>)</span>
 <span id="cb46-2"><a href="pharmacokinetics.html#cb46-2"></a><span class="kw">wnl5</span>(fPK04c, dPK04, <span class="dt">pNames=</span><span class="kw">c</span>(<span class="st">&quot;V/F&quot;</span>, <span class="st">&quot;Kp&quot;</span>), <span class="dt">IE=</span><span class="kw">c</span>(<span class="dv">70</span>, <span class="fl">0.25</span>), <span class="dt">Error=</span><span class="st">&quot;POIS&quot;</span>)</span></code></pre></div>
 <pre><code>## $PE
 ##        V/F         Kp 
@@ -2181,8 +2183,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [26]  0.055508415
 ## 
 ## $`Elapsed Time`
-## Time difference of 0.03091693 secs</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="pharmacokinetics.html#cb48-1"></a><span class="co">## </span></span>
+## Time difference of 0.02297497 secs</code></pre>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="pharmacokinetics.html#cb48-1"></a><span class="co">## </span></span>
 <span id="cb48-2"><a href="pharmacokinetics.html#cb48-2"></a>fPK04d =<span class="st"> </span><span class="cf">function</span>(THETA) <span class="co"># Eq 4:6</span></span>
 <span id="cb48-3"><a href="pharmacokinetics.html#cb48-3"></a>{</span>
 <span id="cb48-4"><a href="pharmacokinetics.html#cb48-4"></a>  V  =<span class="st"> </span>THETA[<span class="dv">1</span>]</span>
@@ -2268,8 +2270,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [22] 1.2526109 1.1955724 1.4082081 1.2612859 0.7074254
 ## 
 ## $`Elapsed Time`
-## Time difference of 0.1186829 secs</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="pharmacokinetics.html#cb50-1"></a>r4 =<span class="st"> </span><span class="kw">nlr</span>(fPK04d, dPK04, <span class="dt">pNames=</span><span class="kw">c</span>(<span class="st">&quot;V/F&quot;</span>, <span class="st">&quot;Kp&quot;</span>, <span class="st">&quot;Tlag&quot;</span>), <span class="dt">IE=</span><span class="kw">c</span>(<span class="dv">70</span>, <span class="fl">0.25</span>, <span class="dv">1</span>)) ; r4</span></code></pre></div>
+## Time difference of 0.1017201 secs</code></pre>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="pharmacokinetics.html#cb50-1"></a>r4 =<span class="st"> </span><span class="kw">nlr</span>(fPK04d, dPK04, <span class="dt">pNames=</span><span class="kw">c</span>(<span class="st">&quot;V/F&quot;</span>, <span class="st">&quot;Kp&quot;</span>, <span class="st">&quot;Tlag&quot;</span>), <span class="dt">IE=</span><span class="kw">c</span>(<span class="dv">70</span>, <span class="fl">0.25</span>, <span class="dv">1</span>)) ; r4</span></code></pre></div>
 <pre><code>## $Est
 ##            V/F          Kp       Tlag    AddErrVar    AddErrSD
 ## PE  52.2354285 0.154908191 0.69871821  0.005497434  0.07414468
@@ -2333,10 +2335,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [26]  0.1074321750
 ## 
 ## $`Elapsed Time`
-## Time difference of 0.129653 secs</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="pharmacokinetics.html#cb52-1"></a>condNum4 =<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">max</span>(e<span class="op">$</span>EigenVal)<span class="op">/</span><span class="kw">min</span>(e<span class="op">$</span>EigenVal)) ; condNum4</span></code></pre></div>
+## Time difference of 0.1116729 secs</code></pre>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="pharmacokinetics.html#cb52-1"></a>condNum4 =<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">max</span>(e<span class="op">$</span>EigenVal)<span class="op">/</span><span class="kw">min</span>(e<span class="op">$</span>EigenVal)) ; condNum4</span></code></pre></div>
 <pre><code>## [1] 2.145343</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="pharmacokinetics.html#cb54-1"></a><span class="kw">dev.new</span>() ; <span class="kw">plot</span>(e<span class="op">$</span>Residual, <span class="dt">type=</span><span class="st">&quot;o&quot;</span>) ; <span class="kw">abline</span>(<span class="dt">h=</span><span class="dv">0</span>)</span>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="pharmacokinetics.html#cb54-1"></a><span class="kw">dev.new</span>() ; <span class="kw">plot</span>(e<span class="op">$</span>Residual, <span class="dt">type=</span><span class="st">&quot;o&quot;</span>) ; <span class="kw">abline</span>(<span class="dt">h=</span><span class="dv">0</span>)</span>
 <span id="cb54-2"><a href="pharmacokinetics.html#cb54-2"></a><span class="kw">wnl5</span>(fPK04d, dPK04, <span class="dt">pNames=</span><span class="kw">c</span>(<span class="st">&quot;V/F&quot;</span>, <span class="st">&quot;Kp&quot;</span>, <span class="st">&quot;Tlag&quot;</span>), <span class="dt">IE=</span><span class="kw">c</span>(<span class="dv">70</span>, <span class="fl">0.25</span>, <span class="dv">1</span>))</span></code></pre></div>
 <pre><code>## $PE
 ##        V/F         Kp       Tlag 
@@ -2389,11 +2391,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [26]  0.1074367700
 ## 
 ## $`Elapsed Time`
-## Time difference of 0.06881595 secs</code></pre>
+## Time difference of 0.0518899 secs</code></pre>
 </div>
 <div id="pk05.r" class="section level2">
 <h2><span class="header-section-number">1.5</span> PK05.R</h2>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="pharmacokinetics.html#cb56-1"></a><span class="kw">require</span>(wnl)</span>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="pharmacokinetics.html#cb56-1"></a><span class="kw">require</span>(wnl)</span>
 <span id="cb56-2"><a href="pharmacokinetics.html#cb56-2"></a></span>
 <span id="cb56-3"><a href="pharmacokinetics.html#cb56-3"></a>dPK05 =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/PK05.csv&quot;</span>, <span class="dt">skip=</span><span class="dv">1</span>)</span>
 <span id="cb56-4"><a href="pharmacokinetics.html#cb56-4"></a><span class="kw">colnames</span>(dPK05) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;TIME&quot;</span>, <span class="st">&quot;DV&quot;</span>, <span class="st">&quot;CMT&quot;</span>) ; dPK05</span></code></pre></div>
@@ -2510,7 +2512,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 </div>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="pharmacokinetics.html#cb57-1"></a>AMT =<span class="st"> </span><span class="dv">250</span> <span class="co"># mg</span></span>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="pharmacokinetics.html#cb57-1"></a>AMT =<span class="st"> </span><span class="dv">250</span> <span class="co"># mg</span></span>
 <span id="cb57-2"><a href="pharmacokinetics.html#cb57-2"></a></span>
 <span id="cb57-3"><a href="pharmacokinetics.html#cb57-3"></a><span class="co">## Closed form model</span></span>
 <span id="cb57-4"><a href="pharmacokinetics.html#cb57-4"></a>fPK05a =<span class="st"> </span><span class="cf">function</span>(THETA)</span>
@@ -2591,8 +2593,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [16]  1.166794122 -3.147080154 -2.250710016 -0.260143898  2.659682119
 ## 
 ## $`Elapsed Time`
-## Time difference of 0.04088998 secs</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="pharmacokinetics.html#cb59-1"></a><span class="kw">wnl5</span>(fPK05a, dPK05, <span class="dt">pNames=</span><span class="kw">c</span>(<span class="st">&quot;V&quot;</span>, <span class="st">&quot;Cl&quot;</span>, <span class="st">&quot;fe&quot;</span>), <span class="dt">IE=</span><span class="kw">c</span>(<span class="fl">10.5</span>, <span class="fl">1.15</span>, <span class="fl">0.3</span>), <span class="dt">Error=</span><span class="st">&quot;PROP&quot;</span>)</span></code></pre></div>
+## Time difference of 0.03088999 secs</code></pre>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="pharmacokinetics.html#cb59-1"></a><span class="kw">wnl5</span>(fPK05a, dPK05, <span class="dt">pNames=</span><span class="kw">c</span>(<span class="st">&quot;V&quot;</span>, <span class="st">&quot;Cl&quot;</span>, <span class="st">&quot;fe&quot;</span>), <span class="dt">IE=</span><span class="kw">c</span>(<span class="fl">10.5</span>, <span class="fl">1.15</span>, <span class="fl">0.3</span>), <span class="dt">Error=</span><span class="st">&quot;PROP&quot;</span>)</span></code></pre></div>
 <pre><code>## $PE
 ##          V         Cl         fe 
 ## 10.9350649  1.1685112  0.3632237 
@@ -2641,8 +2643,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [16]  2.22010196 -2.18277572 -1.71672049 -0.53917155  1.68146484
 ## 
 ## $`Elapsed Time`
-## Time difference of 0.01196885 secs</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="pharmacokinetics.html#cb61-1"></a><span class="co">## Differential Equation Model</span></span>
+## Time difference of 0.007978916 secs</code></pre>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="pharmacokinetics.html#cb61-1"></a><span class="co">## Differential Equation Model</span></span>
 <span id="cb61-2"><a href="pharmacokinetics.html#cb61-2"></a><span class="kw">require</span>(deSolve)</span>
 <span id="cb61-3"><a href="pharmacokinetics.html#cb61-3"></a></span>
 <span id="cb61-4"><a href="pharmacokinetics.html#cb61-4"></a>ivPK1c =<span class="st"> </span><span class="cf">function</span>(t, y, p)</span>
@@ -2666,7 +2668,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 9  12.0  5.885456 66.146709
 ## 10 18.0  2.956632 77.258104
 ## 11 24.0  1.485301 82.840054</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="pharmacokinetics.html#cb63-1"></a>iTime =<span class="st"> </span><span class="dv">2</span><span class="op">:</span><span class="kw">length</span>(Times)</span>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="pharmacokinetics.html#cb63-1"></a>iTime =<span class="st"> </span><span class="dv">2</span><span class="op">:</span><span class="kw">length</span>(Times)</span>
 <span id="cb63-2"><a href="pharmacokinetics.html#cb63-2"></a></span>
 <span id="cb63-3"><a href="pharmacokinetics.html#cb63-3"></a>fPK05b =<span class="st"> </span><span class="cf">function</span>(THETA)</span>
 <span id="cb63-4"><a href="pharmacokinetics.html#cb63-4"></a>{</span>
@@ -2735,8 +2737,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [16]  1.166808262 -3.147064793 -2.250710727 -0.260157360  2.659662818
 ## 
 ## $`Elapsed Time`
-## Time difference of 0.229387 secs</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="pharmacokinetics.html#cb65-1"></a><span class="kw">wnl5</span>(fPK05b, dPK05, <span class="dt">pNames=</span><span class="kw">c</span>(<span class="st">&quot;V&quot;</span>, <span class="st">&quot;Cl&quot;</span>, <span class="st">&quot;fe&quot;</span>), <span class="dt">IE=</span><span class="kw">c</span>(<span class="fl">10.5</span>, <span class="fl">1.15</span>, <span class="fl">0.3</span>), <span class="dt">Error=</span><span class="st">&quot;PROP&quot;</span>)</span></code></pre></div>
+## Time difference of 0.182548 secs</code></pre>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="pharmacokinetics.html#cb65-1"></a><span class="kw">wnl5</span>(fPK05b, dPK05, <span class="dt">pNames=</span><span class="kw">c</span>(<span class="st">&quot;V&quot;</span>, <span class="st">&quot;Cl&quot;</span>, <span class="st">&quot;fe&quot;</span>), <span class="dt">IE=</span><span class="kw">c</span>(<span class="fl">10.5</span>, <span class="fl">1.15</span>, <span class="fl">0.3</span>), <span class="dt">Error=</span><span class="st">&quot;PROP&quot;</span>)</span></code></pre></div>
 <pre><code>## $PE
 ##          V         Cl         fe 
 ## 10.9350651  1.1685117  0.3632237 
@@ -2785,11 +2787,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [16]  2.22010449 -2.18277050 -1.71668912 -0.53918976  1.68145317
 ## 
 ## $`Elapsed Time`
-## Time difference of 0.08577085 secs</code></pre>
+## Time difference of 0.08277416 secs</code></pre>
 </div>
 <div id="pk06.r" class="section level2">
 <h2><span class="header-section-number">1.6</span> PK06.R</h2>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="pharmacokinetics.html#cb67-1"></a><span class="kw">library</span>(tidyverse)</span>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="pharmacokinetics.html#cb67-1"></a><span class="kw">library</span>(tidyverse)</span>
 <span id="cb67-2"><a href="pharmacokinetics.html#cb67-2"></a><span class="kw">require</span>(wnl)</span>
 <span id="cb67-3"><a href="pharmacokinetics.html#cb67-3"></a></span>
 <span id="cb67-4"><a href="pharmacokinetics.html#cb67-4"></a>dPK06 =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/PK06.csv&quot;</span>, <span class="dt">skip=</span><span class="dv">1</span>)</span>
@@ -2957,13 +2959,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 </div>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="pharmacokinetics.html#cb68-1"></a><span class="co"># concentration-time plot</span></span>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="pharmacokinetics.html#cb68-1"></a><span class="co"># concentration-time plot</span></span>
 <span id="cb68-2"><a href="pharmacokinetics.html#cb68-2"></a>dPK06 <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb68-3"><a href="pharmacokinetics.html#cb68-3"></a><span class="st">  </span><span class="kw">filter</span>(CMT <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)) <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb68-4"><a href="pharmacokinetics.html#cb68-4"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>TIME, <span class="dt">y=</span>DV, <span class="dt">group =</span> CMT, <span class="dt">color =</span> <span class="kw">as.factor</span>(CMT))) <span class="op">+</span></span>
 <span id="cb68-5"><a href="pharmacokinetics.html#cb68-5"></a><span class="st">  </span><span class="kw">geom_line</span>()</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-6-1.svg" width="672" /></p>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="pharmacokinetics.html#cb69-1"></a>Div =<span class="st"> </span><span class="dv">12500</span></span>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="pharmacokinetics.html#cb69-1"></a>Div =<span class="st"> </span><span class="dv">12500</span></span>
 <span id="cb69-2"><a href="pharmacokinetics.html#cb69-2"></a>Dpo =<span class="st"> </span><span class="dv">25000</span></span>
 <span id="cb69-3"><a href="pharmacokinetics.html#cb69-3"></a></span>
 <span id="cb69-4"><a href="pharmacokinetics.html#cb69-4"></a><span class="co"># Numbers in Table 6.2 p502  # Error ? Au,po/Dpo / Au,iv/Div = 1.10 (110 %) Data error ???</span></span>
@@ -3083,7 +3085,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 </div>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="pharmacokinetics.html#cb70-1"></a>fPK06a =<span class="st"> </span><span class="cf">function</span>(THETA)</span>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="pharmacokinetics.html#cb70-1"></a>fPK06a =<span class="st"> </span><span class="cf">function</span>(THETA)</span>
 <span id="cb70-2"><a href="pharmacokinetics.html#cb70-2"></a>{</span>
 <span id="cb70-3"><a href="pharmacokinetics.html#cb70-3"></a>  V  =<span class="st"> </span>THETA[<span class="dv">1</span>]</span>
 <span id="cb70-4"><a href="pharmacokinetics.html#cb70-4"></a>  Cl =<span class="st"> </span>THETA[<span class="dv">2</span>]</span>
@@ -3158,8 +3160,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [11] -1.58520735 -0.59710813  0.09615523 -1.72265228  1.07257839
 ## 
 ## $`Elapsed Time`
-## Time difference of 0.0538559 secs</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="pharmacokinetics.html#cb72-1"></a><span class="kw">wnl5</span>(fPK06a, dPK06a, <span class="dt">pNames=</span><span class="kw">c</span>(<span class="st">&quot;V&quot;</span>, <span class="st">&quot;Cl&quot;</span>, <span class="st">&quot;fe&quot;</span>), <span class="dt">IE=</span><span class="kw">c</span>(<span class="dv">300</span>, <span class="dv">5</span>, <span class="fl">0.2</span>))</span></code></pre></div>
+## Time difference of 0.05288696 secs</code></pre>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="pharmacokinetics.html#cb72-1"></a><span class="kw">wnl5</span>(fPK06a, dPK06a, <span class="dt">pNames=</span><span class="kw">c</span>(<span class="st">&quot;V&quot;</span>, <span class="st">&quot;Cl&quot;</span>, <span class="st">&quot;fe&quot;</span>), <span class="dt">IE=</span><span class="kw">c</span>(<span class="dv">300</span>, <span class="dv">5</span>, <span class="fl">0.2</span>))</span></code></pre></div>
 <pre><code>## $PE
 ##            V           Cl           fe 
 ## 268.33271003   5.59350948   0.06944777 
@@ -3207,8 +3209,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [11] -1.58524065 -0.59713911  0.09614111 -1.72238884  1.07264672
 ## 
 ## $`Elapsed Time`
-## Time difference of 0.01894999 secs</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="pharmacokinetics.html#cb74-1"></a><span class="co">## Fitting Oral and urine data only</span></span>
+## Time difference of 0.01795197 secs</code></pre>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="pharmacokinetics.html#cb74-1"></a><span class="co">## Fitting Oral and urine data only</span></span>
 <span id="cb74-2"><a href="pharmacokinetics.html#cb74-2"></a>dPK06b =<span class="st"> </span>dPK06[dPK06[,<span class="st">&quot;CMT&quot;</span>] <span class="op">==</span><span class="st"> </span><span class="dv">2</span> <span class="op">|</span><span class="st"> </span>dPK06[,<span class="st">&quot;CMT&quot;</span>] <span class="op">==</span><span class="st"> </span><span class="dv">4</span>,] ; dPK06b <span class="co"># oral data only</span></span></code></pre></div>
 <div class="kable-table">
 <table>
@@ -3314,7 +3316,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 </div>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="pharmacokinetics.html#cb75-1"></a>fPK06b =<span class="st"> </span><span class="cf">function</span>(THETA)</span>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="pharmacokinetics.html#cb75-1"></a>fPK06b =<span class="st"> </span><span class="cf">function</span>(THETA)</span>
 <span id="cb75-2"><a href="pharmacokinetics.html#cb75-2"></a>{</span>
 <span id="cb75-3"><a href="pharmacokinetics.html#cb75-3"></a>  V    =<span class="st"> </span>THETA[<span class="dv">1</span>]</span>
 <span id="cb75-4"><a href="pharmacokinetics.html#cb75-4"></a>  Cl   =<span class="st"> </span>THETA[<span class="dv">2</span>]</span>
@@ -3412,8 +3414,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [11]   0.31399379  -0.02258967   0.88482069  -1.22232686   0.76860024
 ## 
 ## $`Elapsed Time`
-## Time difference of 0.1546159 secs</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="pharmacokinetics.html#cb77-1"></a><span class="kw">nlr</span>(fPK06b, dPK06b, <span class="dt">pNames=</span><span class="kw">c</span>(<span class="st">&quot;V&quot;</span>, <span class="st">&quot;Cl&quot;</span>, <span class="st">&quot;fe&quot;</span>, <span class="st">&quot;F&quot;</span>, <span class="st">&quot;Ka&quot;</span>, <span class="st">&quot;Tlag&quot;</span>), <span class="dt">IE=</span><span class="kw">c</span>(<span class="dv">300</span>, <span class="dv">5</span>, <span class="fl">0.2</span>, <span class="fl">0.9</span>, <span class="dv">1</span>, <span class="fl">0.4</span>), <span class="dt">LB=</span><span class="kw">c</span>(<span class="dv">200</span>, <span class="dv">3</span>, <span class="fl">0.01</span>, <span class="fl">0.09</span>, <span class="fl">0.1</span>, <span class="dv">0</span>), <span class="dt">UB=</span><span class="kw">c</span>(<span class="dv">400</span>, <span class="dv">10</span>, <span class="fl">0.3</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">1</span>))</span></code></pre></div>
+## Time difference of 0.1545689 secs</code></pre>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="pharmacokinetics.html#cb77-1"></a><span class="kw">nlr</span>(fPK06b, dPK06b, <span class="dt">pNames=</span><span class="kw">c</span>(<span class="st">&quot;V&quot;</span>, <span class="st">&quot;Cl&quot;</span>, <span class="st">&quot;fe&quot;</span>, <span class="st">&quot;F&quot;</span>, <span class="st">&quot;Ka&quot;</span>, <span class="st">&quot;Tlag&quot;</span>), <span class="dt">IE=</span><span class="kw">c</span>(<span class="dv">300</span>, <span class="dv">5</span>, <span class="fl">0.2</span>, <span class="fl">0.9</span>, <span class="dv">1</span>, <span class="fl">0.4</span>), <span class="dt">LB=</span><span class="kw">c</span>(<span class="dv">200</span>, <span class="dv">3</span>, <span class="fl">0.01</span>, <span class="fl">0.09</span>, <span class="fl">0.1</span>, <span class="dv">0</span>), <span class="dt">UB=</span><span class="kw">c</span>(<span class="dv">400</span>, <span class="dv">10</span>, <span class="fl">0.3</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">1</span>))</span></code></pre></div>
 <pre><code>## $Est
 ##            V         Cl           fe           F          Ka       Tlag
 ## PE  259.8127   5.008762   0.08983765   0.9190082  0.54181929  0.3939449
@@ -3488,8 +3490,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [11]   0.34247683  -0.01687207   0.87711759  -1.31735366   0.77441702
 ## 
 ## $`Elapsed Time`
-## Time difference of 0.1126981 secs</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="pharmacokinetics.html#cb79-1"></a><span class="kw">wnl5</span>(fPK06b, dPK06b, <span class="dt">pNames=</span><span class="kw">c</span>(<span class="st">&quot;V&quot;</span>, <span class="st">&quot;Cl&quot;</span>, <span class="st">&quot;fe&quot;</span>, <span class="st">&quot;F&quot;</span>, <span class="st">&quot;Ka&quot;</span>, <span class="st">&quot;Tlag&quot;</span>), <span class="dt">IE=</span><span class="kw">c</span>(<span class="dv">300</span>, <span class="dv">5</span>, <span class="fl">0.2</span>, <span class="fl">0.9</span>, <span class="dv">1</span>, <span class="fl">0.4</span>), <span class="dt">LB=</span><span class="kw">c</span>(<span class="dv">200</span>, <span class="dv">3</span>, <span class="fl">0.01</span>, <span class="fl">0.09</span>, <span class="fl">0.1</span>, <span class="dv">0</span>), <span class="dt">UB=</span><span class="kw">c</span>(<span class="dv">400</span>, <span class="dv">10</span>, <span class="fl">0.3</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">1</span>))</span></code></pre></div>
+## Time difference of 0.1107318 secs</code></pre>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="pharmacokinetics.html#cb79-1"></a><span class="kw">wnl5</span>(fPK06b, dPK06b, <span class="dt">pNames=</span><span class="kw">c</span>(<span class="st">&quot;V&quot;</span>, <span class="st">&quot;Cl&quot;</span>, <span class="st">&quot;fe&quot;</span>, <span class="st">&quot;F&quot;</span>, <span class="st">&quot;Ka&quot;</span>, <span class="st">&quot;Tlag&quot;</span>), <span class="dt">IE=</span><span class="kw">c</span>(<span class="dv">300</span>, <span class="dv">5</span>, <span class="fl">0.2</span>, <span class="fl">0.9</span>, <span class="dv">1</span>, <span class="fl">0.4</span>), <span class="dt">LB=</span><span class="kw">c</span>(<span class="dv">200</span>, <span class="dv">3</span>, <span class="fl">0.01</span>, <span class="fl">0.09</span>, <span class="fl">0.1</span>, <span class="dv">0</span>), <span class="dt">UB=</span><span class="kw">c</span>(<span class="dv">400</span>, <span class="dv">10</span>, <span class="fl">0.3</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">1</span>))</span></code></pre></div>
 <pre><code>## $PE
 ##            V           Cl           fe            F           Ka 
 ## 257.35673553   4.96104921   0.09069824   0.91033578   0.54179643 
@@ -3539,8 +3541,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [11]   0.33981675  -0.01904169   0.87620563  -1.31229011   0.76675708
 ## 
 ## $`Elapsed Time`
-## Time difference of 0.05784583 secs</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="pharmacokinetics.html#cb81-1"></a><span class="co">## Fitting both IV and oral data</span></span>
+## Time difference of 0.05685186 secs</code></pre>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="pharmacokinetics.html#cb81-1"></a><span class="co">## Fitting both IV and oral data</span></span>
 <span id="cb81-2"><a href="pharmacokinetics.html#cb81-2"></a>fPK06c =<span class="st"> </span><span class="cf">function</span>(THETA)</span>
 <span id="cb81-3"><a href="pharmacokinetics.html#cb81-3"></a>{</span>
 <span id="cb81-4"><a href="pharmacokinetics.html#cb81-4"></a>  V    =<span class="st"> </span>THETA[<span class="dv">1</span>]</span>
@@ -3648,8 +3650,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [26]   1.3884255  -2.7417910  -0.2763769  -2.6186923   2.3194822
 ## 
 ## $`Elapsed Time`
-## Time difference of 0.2293859 secs</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="pharmacokinetics.html#cb83-1"></a><span class="kw">wnl5</span>(fPK06c, dPK06, <span class="dt">pNames=</span><span class="kw">c</span>(<span class="st">&quot;V&quot;</span>, <span class="st">&quot;Cl&quot;</span>, <span class="st">&quot;fe&quot;</span>, <span class="st">&quot;F&quot;</span>, <span class="st">&quot;Ka&quot;</span>, <span class="st">&quot;Tlag&quot;</span>), <span class="dt">IE=</span><span class="kw">c</span>(<span class="dv">300</span>, <span class="dv">5</span>, <span class="fl">0.2</span>, <span class="fl">0.9</span>, <span class="dv">1</span>, <span class="fl">0.4</span>)) <span class="co"># require wnl_0.3.0</span></span></code></pre></div>
+## Time difference of 0.233412 secs</code></pre>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="pharmacokinetics.html#cb83-1"></a><span class="kw">wnl5</span>(fPK06c, dPK06, <span class="dt">pNames=</span><span class="kw">c</span>(<span class="st">&quot;V&quot;</span>, <span class="st">&quot;Cl&quot;</span>, <span class="st">&quot;fe&quot;</span>, <span class="st">&quot;F&quot;</span>, <span class="st">&quot;Ka&quot;</span>, <span class="st">&quot;Tlag&quot;</span>), <span class="dt">IE=</span><span class="kw">c</span>(<span class="dv">300</span>, <span class="dv">5</span>, <span class="fl">0.2</span>, <span class="fl">0.9</span>, <span class="dv">1</span>, <span class="fl">0.4</span>)) <span class="co"># require wnl_0.3.0</span></span></code></pre></div>
 <pre><code>## $PE
 ##            V           Cl           fe            F           Ka 
 ## 290.28502727   6.02550559   0.06982639   1.13591977   0.42038650 
@@ -3705,7 +3707,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [26]   1.33197094  -2.46366489  -0.55823977  -2.21294410   2.24969295
 ## 
 ## $`Elapsed Time`
-## Time difference of 0.1635621 secs</code></pre>
+## Time difference of 0.1635611 secs</code></pre>
 
 <div id="refs" class="references">
 <div>
@@ -3728,11 +3730,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({

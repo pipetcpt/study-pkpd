@@ -1,0 +1,147 @@
+# One compartment model - oral dosing
+
+`wnl` 라이브러리를 불러오고 자료를 읽어옵니다.
+
+```{r}
+library(wnl)
+dPK02 = read.csv("data/PK02.csv", skip=1)
+colnames(dPK02) = c("TIME", "DV")
+plot(dPK02[,"TIME"], dPK02[,"DV"], xlim=c(0, 400), ylim=c(0, 2.5), 
+     xlab="Time (min)", ylab="Concentration (ug/L)", pch=16)
+```
+
+먼저 NCA 분석을 해 봅니다. Tmax는 40분, Cmax는 2.00 ug/L인 것을 알 수 있습니다.
+
+```{r}
+NonCompart::sNCA(dPK02[,"TIME"], dPK02[,"DV"], dose=100, doseUnit="ug", timeUnit="min")
+```
+
+## Compartmental analysis without Tlag
+
+경구 투여 일구획 분석, 지연시간이 없는 모형입니다. Ka, V, K로 농도를 나타낼 수 있습니다.
+
+```{r}
+DOSE = 100
+
+fPK02a = function(THETA) # Prediction function
+{
+  Ka = THETA[1]
+  V  = THETA[2]
+  K  = THETA[3]
+  Cp = DOSE/V*Ka/(Ka - K)*(exp(-K*TIME) - exp(-Ka*TIME)) # eq 2:1
+  return(Cp)
+}
+TIME = dPK02[,"TIME"]
+r1 = nlr(fPK02a, dPK02, pNames=c("ka", "V", "k"), IE=c(0.1, 30, 0.05))
+
+r1$Est
+```
+
+## Compartmental analysis with Tlag 
+
+경구 투여 일구획 분석, 지연시간이 있는 모형입니다. Ka, V, K에 Tlag가 추가되어 농도를 나타낼 수 있습니다.
+
+```{r}
+fPK02b = function(THETA) # Prediction function
+{
+  Ka   = THETA[1]
+  V    = THETA[2]
+  K    = THETA[3]
+  tlag = THETA[4]
+
+  Cp  = DOSE/V*Ka/(Ka - K)*(exp(-K*(TIME - tlag)) - exp(-Ka*(TIME - tlag))) # eq 2:2
+  return(Cp)
+}
+TIME = dPK02[,"TIME"]
+r2 = nlr(fPK02b, dPK02, pNames=c("ka", "V", "k", "tlag"), IE=c(0.1, 30, 0.05, 20))
+
+r2$Est
+```
+
+## Modeling Result
+
+지연 시간이 있는 모형의 적합이 더 좋은 것을 알 수 있습니다. Cmax 부분을 주의깊게 살펴보세요.
+
+```{r}
+
+# Figure 2.3, p 480
+plot(dPK02[,"TIME"], dPK02[,"DV"], xlim=c(0, 400), ylim=c(0, 2.5), 
+     xlab="Time (min)", ylab="Concentration (ug/L)", pch=16)
+TIME = 0:400
+lines(TIME, fPK02a(r1$Est["PE", 1:3]), lty=2)
+lines(TIME, fPK02b(r2$Est["PE", 1:4]))
+```
+
+# One compartment model - IV dosing
+
+`wnl` 라이브러리를 불러오고 자료를 읽어옵니다. 4명의 IV 투약 후 농도 자료를 불러와 그림을 자료 탐색을 할 수 있습니다.
+
+```{r}
+require(wnl)
+dPK01 = read.csv("data/PK01.csv", skip=1)
+colnames(dPK01) = c("TIME", "DV", "ID")
+
+library(ggplot2)
+ggplot(dPK01, aes(TIME, DV, group = ID, color = as.factor(ID))) +
+  geom_line() + geom_point() + scale_y_log10()
+```
+
+- 4명의 피험자 모두 대략적으로 시간에 따른 농도 감소가 단항 지수함수적인 것을 관찰할 수
+있습니다.	
+- 피험자 1과 2를 비교하면 2번 피험자가	AUC가 더 작으며, 따라서 청소율이 더 클 것이라
+예상할 수 있으며, Y	 절편이 거의 같은 것으로 보아 분포용적이 유사할 것으로 보입니다.	
+- 피험자 3과	4의 경우 곡선이 교차하는 형태로 눈으로는 어느 쪽이 AUC가 클지 알기 어렵고, Y절편에
+해당하는 농도가 높은 쪽이 분포용적이 더 작을 것이라 예상할 수 있습니다.
+
+4명 자료의 NCA 분석을 `tblNCA()` 함수를 사용해 계산할 수 있습니다.
+
+```{r}
+NonCompart::tblNCA(dPK01, key="ID", colTime="TIME", colConc="DV", dose=10, adm="Bolus")
+
+IDs = unique(dPK01[,"ID"])
+nID = length(IDs)
+DOSE = 10000 # ug
+```
+
+## Compartmental analysis
+
+V, K만 있으면 단항 지수함수적 농도 감소를 보이는 IV dosing의 농도를 나타낼 수 있으므로 아래와 같이 간단한 함수를 만들 수 있습니다.
+
+```{r}
+fPK01 = function(THETA) # Prediction function
+{
+  V  = THETA[1]
+  K  = THETA[2]
+  Cp = DOSE/V*exp(-K*TIME)  # External DOSE, TIME, eq 1:2
+  return(Cp)
+}
+```
+
+여러명의 자료를 분석하기 위해 `for` 함수를 사용하였습니다. 복잡해보이지만 `nlr` 함수를 사용하는 것이 핵심입니다.
+
+```{r}
+Result = vector()
+for (i in 1:nID) {
+  cID = IDs[i]
+  Data = dPK01[dPK01$ID == cID,]
+  TIME = dPK01[dPK01$ID == cID,"TIME"]
+  Res = nlr(fPK01, Data, pNames=c("V", "k"), IE=c(20, 0.2),
+            SecNames=c("CL", "AUC", "AUMC" , "Thalf", "MRT"), 
+            SecForms=c(~V*k, ~DOSE/V/k, ~DOSE/V/k/k, ~log(2)/k, ~1/k))
+  Result = rbind(Result, cbind(ID=cID, Res$Est))
+} ; Result
+```
+
+## Modeling Result
+
+```{r}
+# Figure 1.1, p 470
+plot(0, 1, type="n", xlim=c(0, 160), ylim=c(10, 1000), log="y", xlab="Time (min)", ylab="Concentration (ug/L)")
+for (i in 1:nID) {
+  cID = IDs[i]
+  TIME = dPK01[dPK01$ID == cID,"TIME"]
+  points(TIME, dPK01[dPK01$ID == cID,"DV"], pch=14+i)
+  cTHETA = Result[Result[,"ID"]==cID & rownames(Result)=="PE", c("V", "k")]
+  lines(TIME, fPK01(cTHETA))   
+}
+```
