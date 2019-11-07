@@ -4,7 +4,7 @@
 
 ```{r}
 library(wnl)
-dPK02 = read.csv("data/PK02.csv", skip=1)
+dPK02 = read.csv("data/hands-on1.csv", skip=1)
 colnames(dPK02) = c("TIME", "DV")
 plot(dPK02[,"TIME"], dPK02[,"DV"], xlim=c(0, 400), ylim=c(0, 2.5), 
      xlab="Time (min)", ylab="Concentration (ug/L)", pch=16)
@@ -78,7 +78,7 @@ lines(TIME, fPK02b(r2$Est["PE", 1:4]))
 
 ```{r}
 require(wnl)
-dPK01 = read.csv("data/PK01.csv", skip=1)
+dPK01 = read.csv("data/hands-on2.csv", skip=1)
 colnames(dPK01) = c("TIME", "DV", "ID")
 
 library(ggplot2)
@@ -144,4 +144,85 @@ for (i in 1:nID) {
   cTHETA = Result[Result[,"ID"]==cID & rownames(Result)=="PE", c("V", "k")]
   lines(TIME, fPK01(cTHETA))   
 }
+```
+
+# Two compartment model – oral dosing
+
+```{r}
+require(wnl)
+dPK14 = read.csv("data-old/PK14.csv", skip=1)
+colnames(dPK14) = c("TIME", "DV") ; dPK14
+
+Dpo = 23158
+```
+
+## Compartmental analysis without Tlag
+
+경구 투여 2구획 분석, 지연시간이 없는 모형입니다. Ka, V, k21, alpha, beta 로 농도를 나타낼 수 있습니다.
+
+```{r}
+
+## without lag
+fPK14a = function(THETA)
+{
+  Vc  = THETA[1]
+  Ka  = THETA[2]
+  k21 = THETA[3]
+  a   = THETA[4] # alpha
+  b   = THETA[5] # beta
+  
+  T1 = e$DATA[,"TIME"]
+  Co = Ka*Dpo/Vc*((k21-a)/(Ka-a)/(b-a)*exp(-a*T1) + 
+                    (k21-b)/(Ka-b)/(a-b)*exp(-b*T1) + 
+                    (k21-Ka)/(a-Ka)/(b-Ka)*exp(-Ka*T1)) # Erratum in eq 14:1
+  
+  return(Co)
+}
+
+r1 <- nlr(fPK14a, dPK14, 
+          pNames=c("Vc/F", "Ka", "k21", "alpha", "beta"), 
+          IE=c(350, 11, 1, 0.1, 0.01))
+
+r1$Est
+```
+
+## Compartmental analysis with Tlag 
+
+경구 투여 일구획 분석, 지연시간이 있는 모형입니다. Ka, V, k21, alpha, beta 에 Tlag가 추가되어 농도를 나타낼 수 있습니다.
+
+```{r}
+## with lag
+fPK14b = function(THETA)
+{
+  Vc  = THETA[1]
+  Ka  = THETA[2]
+  k21 = THETA[3]
+  a   = THETA[4] # alpha
+  b   = THETA[5] # beta
+  TL  = THETA[6] # Tlag
+  
+  T1 = e$DATA[,"TIME"]
+  Co = Ka*Dpo/Vc*((k21-a)/(Ka-a)/(b-a)*exp(-a*(T1-TL)) + 
+                    (k21-b)/(Ka-b)/(a-b)*exp(-b*(T1-TL)) + 
+                    (k21-Ka)/(a-Ka)/(b-Ka)*exp(-Ka*(T1-TL))) 
+  Co[Co < 0] = 0 # remove negative concentrationss before tlag
+  
+  return(Co)
+}
+
+r2 <- nlr(fPK14b, dPK14, 
+          pNames=c("Vc/F", "Ka", "k21", "alpha", "beta", "Tlag"), 
+          IE=c(150, 11, 0.12, 0.1, 0.01, 0.05))
+r2$Est
+```
+
+## Modeling Result
+
+지연 시간이 있는 모형의 적합이 더 좋은 것을 알 수 있습니다. Cmax 부분을 주의깊게 살펴보세요.
+
+```{r}
+plot(dPK14[,"TIME"], dPK14[,"DV"], xlim=c(0, 25), ylim=c(0, 250), xlab="Time (min)", ylab="Concentration (ug/L)", pch=16)
+TIME = dPK14[,"TIME"]
+lines(TIME, fPK14a(r1$Est["PE", 1:5]), lty=2)
+lines(TIME, fPK14b(r2$Est["PE", 1:6]))
 ```

@@ -1,6 +1,6 @@
-setwd("D:/Rt/Gab/")
-require(wnl)
-dPK10 = read.csv("PK10.csv", skip=1, as.is=TRUE)
+#setwd("D:/Rt/Gab/")
+
+dPK10 = read.csv("data-old/PK10.csv", skip=1, as.is=TRUE)
 colnames(dPK10) = c("TIME", "DV", "GRP", "ADM") ; dPK10
 
 Div = 100
@@ -20,7 +20,7 @@ fPK10a = function(THETA)
 }
 
 nlr(fPK10a, dPK10, pNames=c("Vc", "k21", "alpha", "beta"), IE=c(60, 0.06, 0.06, 0.007))
-dev.new() ; plot(e$Residual, type="o") ; abline(h=0)
+plot(e$Residual, type="o") ; abline(h=0)
 wnl5(fPK10a, dPK10, pNames=c("Vc", "k21", "alpha", "beta"), IE=c(60, 0.06, 0.06, 0.007))
 
 ## iv and oral without tlag
@@ -43,7 +43,7 @@ fPK10b = function(THETA)
 }
 
 nlr(fPK10b, dPK10, pNames=c("Vc", "Ka", "k21", "alpha", "beta", "F"), IE=c(60, 0.04, 0.026, 0.06, 0.007, 0.4))
-dev.new() ; plot(e$Residual, type="o") ; abline(h=0)
+plot(e$Residual, type="o") ; abline(h=0)
 wnl5(fPK10b, dPK10, pNames=c("Vc", "Ka", "k21", "alpha", "beta", "F"), IE=c(60, 0.04, 0.026, 0.06, 0.007, 0.4))
 
 ## iv and oral with tlag
@@ -68,7 +68,5 @@ fPK10c = function(THETA)
 }
 
 nlr(fPK10c, dPK10, pNames=c("Vc", "Ka", "k21", "alpha", "beta", "F", "Tlag"), IE=c(60, 0.04, 0.026, 0.06, 0.007, 0.4, 3))
-dev.new() ; plot(e$Residual, type="o") ; abline(h=0)
+plot(e$Residual, type="o") ; abline(h=0)
 wnl5(fPK10c, dPK10, pNames=c("Vc", "Ka", "k21", "alpha", "beta", "F", "Tlag"), IE=c(60, 0.04, 0.026, 0.06, 0.007, 0.4, 3))
-
-

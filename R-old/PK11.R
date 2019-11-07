@@ -1,6 +1,5 @@
-setwd("D:/Rt/Gab/")
 require(wnl)
-dPK11pk = read.csv("PK11pk.csv", skip=1)
+dPK11pk = read.csv("data-old/PK11pk.csv", skip=1)
 colnames(dPK11pk) = c("TIME", "DV") ; dPK11pk
 
 dPK11pd = read.csv("PK11pd.csv", skip=1)
@@ -37,8 +36,10 @@ fPK11pk = function(THETA)
 }
 
 r1 = nlr(fPK11pk, dPK11pk, pNames=c("Vc", "Ka", "k21", "alpha", "beta", "Tlag"), IE=c(10, 0.7, 0.1, 0.6, 0.07, 0.4), Error="P") ; r1
-dev.new() ; plot(e$Residual, type="o") ; abline(h=0)
-wnl5(fPK11pk, dPK11pk, pNames=c("Vc", "Ka", "k21", "alpha", "beta", "Tlag"), IE=c(20, 0.7, 0.1, 0.6, 0.07, 0.4), Error="P")
+plot(e$Residual, type="o") ; abline(h=0)
+
+
+
 
 ## fitting PD model after fixed PK parameters
 fPK11pd = function(THETA)

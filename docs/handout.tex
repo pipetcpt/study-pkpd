@@ -1,39 +1,53 @@
-\documentclass[9pt,]{krantz}
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
+%
+\documentclass[
+  9pt,
+]{krantz}
 \usepackage{lmodern}
 \usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
-\usepackage{fixltx2e} % provides \textsubscript
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
-\else % if luatex or xelatex
-  \ifxetex
-    \usepackage{mathspec}
-  \else
-    \usepackage{fontspec}
-  \fi
-  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
-    \setmonofont[Mapping=tex-ansi,Scale=0.7]{Source Code Pro}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+  \setmonofont[Scale=0.7]{Source Code Pro}
 \fi
-% use upquote if available, for straight quotes in verbatim environments
+% Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-% use microtype if available
-\IfFileExists{microtype.sty}{%
-\usepackage[]{microtype}
-\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
-\PassOptionsToPackage{hyphens}{url} % url is loaded by hyperref
-\usepackage[unicode=true]{hyperref}
-\PassOptionsToPackage{usenames,dvipsnames}{color} % color is loaded by hyperref
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \hypersetup{
-            pdftitle={R로 하는 약동학 모델링},
-            pdfauthor={한성필},
-            colorlinks=true,
-            linkcolor=Maroon,
-            citecolor=Blue,
-            urlcolor=Blue,
-            breaklinks=true}
-\urlstyle{same}  % don't use monospace font for urls
+  pdftitle={R로 하는 약동학 모델링},
+  pdfauthor={한성필},
+  colorlinks=true,
+  linkcolor=Maroon,
+  filecolor=Maroon,
+  citecolor=Blue,
+  urlcolor=Blue,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
 \usepackage{color}
 \usepackage{fancyvrb}
 \newcommand{\VerbBar}{|}
@@ -43,40 +57,46 @@
 \usepackage{framed}
 \definecolor{shadecolor}{RGB}{248,248,248}
 \newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
-\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
 \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
 \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
-\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
-\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
-\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
-\newcommand{\ImportTok}[1]{#1}
-\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
 \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
-\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
-\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
-\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
-\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
-\newcommand{\BuiltInTok}[1]{#1}
-\newcommand{\ExtensionTok}[1]{#1}
-\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
-\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
-\newcommand{\RegionMarkerTok}[1]{#1}
-\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
-\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
 \newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
 \newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \usepackage{longtable,booktabs}
-% Fix footnotes in tables (requires footnote package)
-\IfFileExists{footnote.sty}{\usepackage{footnote}\makesavenoteenv{long table}}{}
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
 \usepackage{graphicx,grffile}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
@@ -86,31 +106,14 @@
 % margins by default, and it is still possible to overwrite the defaults
 % using explicit options in \includegraphics[width, height, ...]{}
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
-\IfFileExists{parskip.sty}{%
-\usepackage{parskip}
-}{% else
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{6pt plus 2pt minus 1pt}
-}
-\setlength{\emergencystretch}{3em}  % prevent overfull lines
-\providecommand{\tightlist}{%
-  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-\setcounter{secnumdepth}{5}
-% Redefines (sub)paragraphs to behave more like sections
-\ifx\paragraph\undefined\else
-\let\oldparagraph\paragraph
-\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
-\fi
-\ifx\subparagraph\undefined\else
-\let\oldsubparagraph\subparagraph
-\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
-\fi
-
-% set default figure placement to htbp
+% Set default figure placement to htbp
 \makeatletter
 \def\fps@figure{htbp}
 \makeatother
-
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
 \usepackage{kotex}
 
 \title{R로 하는 약동학 모델링}
@@ -121,24 +124,19 @@
 \maketitle
 
 {
-\hypersetup{linkcolor=black}
+\hypersetup{linkcolor=}
 \setcounter{tocdepth}{2}
 \tableofcontents
 }
 \listoftables
 \listoffigures
-\chapter*{Introduction}\label{introduction}
+\hypertarget{introduction}{%
+\chapter*{Introduction}\label{introduction}}
 
 
-이 자료는 Johan Gabrielsson과 Dan Weiner의 책, ``Pharmacokinetic and
-Pharmacodynamic Data Analysis - Concepts and Applications'' 5th ed.
-(Gabrielsson \protect\hyperlink{ref-gab}{2016})를 풀기 위한 것입니다.
-서울아산병원 임상약리학과 배균섭 교수님께서 개발한 \texttt{wnl}패키지
-(Bae \protect\hyperlink{ref-R-wnl}{2018})를 활용하였습니다.
+이 자료는 Johan Gabrielsson과 Dan Weiner의 책, ``Pharmacokinetic and Pharmacodynamic Data Analysis - Concepts and Applications'' 5th ed.~(Gabrielsson \protect\hyperlink{ref-gab}{2016})를 풀기 위한 것입니다. 서울아산병원 임상약리학과 배균섭 교수님께서 개발한 \texttt{wnl}패키지 (Bae \protect\hyperlink{ref-R-wnl}{2018})를 활용하였습니다.
 
-오탈자 신고 등은
-\href{https://github.com/pipetcpt/study-pkpd/issues}{깃허브 저장소}에
-남겨주십시오.
+오탈자 신고 등은 \href{https://github.com/pipetcpt/study-pkpd/issues}{깃허브 저장소}에 남겨주십시오.
 
 감사합니다.
 
@@ -148,15 +146,15 @@ Pharmacodynamic Data Analysis - Concepts and Applications'' 5th ed.
 
 \mainmatter
 
-\chapter{One compartment model - oral
-dosing}\label{one-compartment-model---oral-dosing}
+\hypertarget{one-compartment-model---oral-dosing}{%
+\chapter{One compartment model - oral dosing}\label{one-compartment-model---oral-dosing}}
 
 \texttt{wnl} 라이브러리를 불러오고 자료를 읽어옵니다.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{library}\NormalTok{(wnl)}
-\NormalTok{dPK02 =}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"data/PK02.csv"}\NormalTok{, }\DataTypeTok{skip=}\DecValTok{1}\NormalTok{)}
+\NormalTok{dPK02 =}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"data/hands-on1.csv"}\NormalTok{, }\DataTypeTok{skip=}\DecValTok{1}\NormalTok{)}
 \KeywordTok{colnames}\NormalTok{(dPK02) =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"TIME"}\NormalTok{, }\StringTok{"DV"}\NormalTok{)}
 \KeywordTok{plot}\NormalTok{(dPK02[,}\StringTok{"TIME"}\NormalTok{], dPK02[,}\StringTok{"DV"}\NormalTok{], }\DataTypeTok{xlim=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{400}\NormalTok{), }\DataTypeTok{ylim=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{2.5}\NormalTok{), }
      \DataTypeTok{xlab=}\StringTok{"Time (min)"}\NormalTok{, }\DataTypeTok{ylab=}\StringTok{"Concentration (ug/L)"}\NormalTok{, }\DataTypeTok{pch=}\DecValTok{16}\NormalTok{)}
@@ -165,8 +163,7 @@ dosing}\label{one-compartment-model---oral-dosing}
 
 \includegraphics{handout_files/figure-latex/unnamed-chunk-1-1.pdf}
 
-먼저 NCA 분석을 해 봅니다. Tmax는 40분, Cmax는 2.00 ug/L인 것을 알 수
-있습니다.
+먼저 NCA 분석을 해 봅니다. Tmax는 40분, Cmax는 2.00 ug/L인 것을 알 수 있습니다.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -204,11 +201,10 @@ dosing}\label{one-compartment-model---oral-dosing}
 ## [1]  7  8  9 10 11 12 13
 \end{verbatim}
 
-\section{Compartmental analysis without
-Tlag}\label{compartmental-analysis-without-tlag}
+\hypertarget{compartmental-analysis-without-tlag}{%
+\section{Compartmental analysis without Tlag}\label{compartmental-analysis-without-tlag}}
 
-경구 투여 일구획 분석, 지연시간이 없는 모형입니다. Ka, V, K로 농도를
-나타낼 수 있습니다.
+경구 투여 일구획 분석, 지연시간이 없는 모형입니다. Ka, V, K로 농도를 나타낼 수 있습니다.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -232,15 +228,14 @@ Tlag}\label{compartmental-analysis-without-tlag}
 \begin{verbatim}
 ##               ka         V            k   AddErrVar    AddErrSD
 ## PE   0.013202142 21.017659  0.013202008  0.08701446  0.29498213
-## SE   0.005442012  8.623425  0.005441962  0.03412981  0.05785063
-## RSE 41.220676235 41.029425 41.220716112 39.22314350 19.61157175
+## SE   0.005442004  8.623411  0.005441954  0.03412981  0.05785063
+## RSE 41.220611647 41.029360 41.220651532 39.22314350 19.61157175
 \end{verbatim}
 
-\section{Compartmental analysis with
-Tlag}\label{compartmental-analysis-with-tlag}
+\hypertarget{compartmental-analysis-with-tlag}{%
+\section{Compartmental analysis with Tlag}\label{compartmental-analysis-with-tlag}}
 
-경구 투여 일구획 분석, 지연시간이 있는 모형입니다. Ka, V, K에 Tlag가
-추가되어 농도를 나타낼 수 있습니다.
+경구 투여 일구획 분석, 지연시간이 있는 모형입니다. Ka, V, K에 Tlag가 추가되어 농도를 나타낼 수 있습니다.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -265,13 +260,13 @@ Tlag}\label{compartmental-analysis-with-tlag}
 ##               ka         V            k      tlag    AddErrVar    AddErrSD
 ## PE   0.027469911 27.353876  0.010511280 11.375450  0.015494408  0.12447654
 ## SE   0.006059932  4.148751  0.001937513  0.867595  0.006077431  0.02441195
-## RSE 22.060253988 15.166957 18.432707310  7.626907 39.223383634 19.61169182
+## RSE 22.060253988 15.166957 18.432707310  7.626907 39.223383633 19.61169182
 \end{verbatim}
 
-\section{Modeling Result}\label{modeling-result}
+\hypertarget{modeling-result}{%
+\section{Modeling Result}\label{modeling-result}}
 
-지연 시간이 있는 모형의 적합이 더 좋은 것을 알 수 있습니다. Cmax 부분을
-주의깊게 살펴보세요.
+지연 시간이 있는 모형의 적합이 더 좋은 것을 알 수 있습니다. Cmax 부분을 주의깊게 살펴보세요.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -286,16 +281,15 @@ Tlag}\label{compartmental-analysis-with-tlag}
 
 \includegraphics{handout_files/figure-latex/unnamed-chunk-5-1.pdf}
 
-\chapter{One compartment model - IV
-dosing}\label{one-compartment-model---iv-dosing}
+\hypertarget{one-compartment-model---iv-dosing}{%
+\chapter{One compartment model - IV dosing}\label{one-compartment-model---iv-dosing}}
 
-\texttt{wnl} 라이브러리를 불러오고 자료를 읽어옵니다. 4명의 IV 투약 후
-농도 자료를 불러와 그림을 자료 탐색을 할 수 있습니다.
+\texttt{wnl} 라이브러리를 불러오고 자료를 읽어옵니다. 4명의 IV 투약 후 농도 자료를 불러와 그림을 자료 탐색을 할 수 있습니다.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \KeywordTok{require}\NormalTok{(wnl)}
-\NormalTok{dPK01 =}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"data/PK01.csv"}\NormalTok{, }\DataTypeTok{skip=}\DecValTok{1}\NormalTok{)}
+\NormalTok{dPK01 =}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"data/hands-on2.csv"}\NormalTok{, }\DataTypeTok{skip=}\DecValTok{1}\NormalTok{)}
 \KeywordTok{colnames}\NormalTok{(dPK01) =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"TIME"}\NormalTok{, }\StringTok{"DV"}\NormalTok{, }\StringTok{"ID"}\NormalTok{)}
 
 \KeywordTok{library}\NormalTok{(ggplot2)}
@@ -309,20 +303,17 @@ dosing}\label{one-compartment-model---iv-dosing}
 \begin{itemize}
 \tightlist
 \item
-  4명의 피험자 모두 대략적으로 시간에 따른 농도 감소가 단항 지수함수적인
-  것을 관찰할 수 있습니다.\\
+  4명의 피험자 모두 대략적으로 시간에 따른 농도 감소가 단항 지수함수적인 것을 관찰할 수
+  있습니다.\\
 \item
-  피험자 1과 2를 비교하면 2번 피험자가 AUC가 더 작으며, 따라서 청소율이
-  더 클 것이라 예상할 수 있으며, Y 절편이 거의 같은 것으로 보아
-  분포용적이 유사할 것으로 보입니다.\\
+  피험자 1과 2를 비교하면 2번 피험자가 AUC가 더 작으며, 따라서 청소율이 더 클 것이라
+  예상할 수 있으며, Y 절편이 거의 같은 것으로 보아 분포용적이 유사할 것으로 보입니다.\\
 \item
-  피험자 3과 4의 경우 곡선이 교차하는 형태로 눈으로는 어느 쪽이 AUC가
-  클지 알기 어렵고, Y절편에 해당하는 농도가 높은 쪽이 분포용적이 더 작을
-  것이라 예상할 수 있습니다.
+  피험자 3과 4의 경우 곡선이 교차하는 형태로 눈으로는 어느 쪽이 AUC가 클지 알기 어렵고, Y절편에
+  해당하는 농도가 높은 쪽이 분포용적이 더 작을 것이라 예상할 수 있습니다.
 \end{itemize}
 
-4명 자료의 NCA 분석을 \texttt{tblNCA()} 함수를 사용해 계산할 수
-있습니다.
+4명 자료의 NCA 분석을 \texttt{tblNCA()} 함수를 사용해 계산할 수 있습니다.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -371,10 +362,10 @@ dosing}\label{one-compartment-model---iv-dosing}
 \end{Highlighting}
 \end{Shaded}
 
-\section{Compartmental analysis}\label{compartmental-analysis}
+\hypertarget{compartmental-analysis}{%
+\section{Compartmental analysis}\label{compartmental-analysis}}
 
-V, K만 있으면 단항 지수함수적 농도 감소를 보이는 IV dosing의 농도를
-나타낼 수 있으므로 아래와 같이 간단한 함수를 만들 수 있습니다.
+V, K만 있으면 단항 지수함수적 농도 감소를 보이는 IV dosing의 농도를 나타낼 수 있으므로 아래와 같이 간단한 함수를 만들 수 있습니다.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -388,8 +379,7 @@ V, K만 있으면 단항 지수함수적 농도 감소를 보이는 IV dosing의
 \end{Highlighting}
 \end{Shaded}
 
-여러명의 자료를 분석하기 위해 \texttt{for} 함수를 사용하였습니다.
-복잡해보이지만 \texttt{nlr} 함수를 사용하는 것이 핵심입니다.
+여러명의 자료를 분석하기 위해 \texttt{for} 함수를 사용하였습니다. 복잡해보이지만 \texttt{nlr} 함수를 사용하는 것이 핵심입니다.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -419,7 +409,7 @@ V, K만 있으면 단항 지수함수적 농도 감소를 보이는 IV dosing의
 ## RSE  3  1.0630369 1.6029348653  44.72140 22.360699 0.971496569
 ## PE   4 19.9471606 0.0098139570  72.19448  8.496733 0.195760575
 ## SE   4  0.2954327 0.0003070959  32.28660  1.899942 0.004148218
-## RSE  4  1.4810766 3.1291754936  44.72170 22.360849 2.119026160
+## RSE  4  1.4810766 3.1291754937  44.72170 22.360849 2.119026160
 ##              AUC         AUMC      Thalf        MRT
 ## PE  9.771371e+04 9.527391e+06 67.5840131  97.503121
 ## SE  2.479761e+03 5.875882e+05  2.5527830   3.682887
@@ -435,7 +425,8 @@ V, K만 있으면 단항 지수함수적 농도 감소를 보이는 IV dosing의
 ## RSE 2.119026e+00 5.135215e+00  3.1291755   3.129175
 \end{verbatim}
 
-\section{Modeling Result}\label{modeling-result-1}
+\hypertarget{modeling-result-1}{%
+\section{Modeling Result}\label{modeling-result-1}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -453,14 +444,149 @@ V, K만 있으면 단항 지수함수적 농도 감소를 보이는 IV dosing의
 
 \includegraphics{handout_files/figure-latex/unnamed-chunk-10-1.pdf}
 
-\hypertarget{refs}{}
-\hypertarget{ref-R-wnl}{}
-Bae, Kyun-Seop. 2018. \emph{Wnl: Minimization Tool for
-Pharmacokinetic-Pharmacodynamic Data Analysis}.
-\url{https://CRAN.R-project.org/package=wnl}.
+\hypertarget{two-compartment-model-oral-dosing}{%
+\chapter{Two compartment model -- oral dosing}\label{two-compartment-model-oral-dosing}}
 
-\hypertarget{ref-gab}{}
-Gabrielsson, Johan. 2016. \emph{Pharmacokinetic and Pharmacodynamic Data
-Analysis : Concepts and Applications}. Stockholm: Apotekarsocieteten.
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{require}\NormalTok{(wnl)}
+\NormalTok{dPK14 =}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"data-old/PK14.csv"}\NormalTok{, }\DataTypeTok{skip=}\DecValTok{1}\NormalTok{)}
+\KeywordTok{colnames}\NormalTok{(dPK14) =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"TIME"}\NormalTok{, }\StringTok{"DV"}\NormalTok{) ; dPK14}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      TIME     DV
+## 1   0.083  13.90
+## 2   0.167 152.00
+## 3   0.250 226.00
+## 4   0.500 204.00
+## 5   1.000 149.00
+## 6   1.500 100.00
+## 7   2.000  66.00
+## 8   3.000  36.00
+## 9   4.000  17.70
+## 10  6.000   6.90
+## 11  8.000   3.96
+## 12 12.000   2.89
+## 13 24.000   0.90
+## 14 25.000   0.90
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Dpo =}\StringTok{ }\DecValTok{23158}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{compartmental-analysis-without-tlag-1}{%
+\section{Compartmental analysis without Tlag}\label{compartmental-analysis-without-tlag-1}}
+
+경구 투여 2구획 분석, 지연시간이 없는 모형입니다. Ka, V, k21, alpha, beta 로 농도를 나타낼 수 있습니다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{## without lag}
+\NormalTok{fPK14a =}\StringTok{ }\ControlFlowTok{function}\NormalTok{(THETA)}
+\NormalTok{\{}
+\NormalTok{  Vc  =}\StringTok{ }\NormalTok{THETA[}\DecValTok{1}\NormalTok{]}
+\NormalTok{  Ka  =}\StringTok{ }\NormalTok{THETA[}\DecValTok{2}\NormalTok{]}
+\NormalTok{  k21 =}\StringTok{ }\NormalTok{THETA[}\DecValTok{3}\NormalTok{]}
+\NormalTok{  a   =}\StringTok{ }\NormalTok{THETA[}\DecValTok{4}\NormalTok{] }\CommentTok{# alpha}
+\NormalTok{  b   =}\StringTok{ }\NormalTok{THETA[}\DecValTok{5}\NormalTok{] }\CommentTok{# beta}
+  
+\NormalTok{  T1 =}\StringTok{ }\NormalTok{e}\OperatorTok{$}\NormalTok{DATA[,}\StringTok{"TIME"}\NormalTok{]}
+\NormalTok{  Co =}\StringTok{ }\NormalTok{Ka}\OperatorTok{*}\NormalTok{Dpo}\OperatorTok{/}\NormalTok{Vc}\OperatorTok{*}\NormalTok{((k21}\OperatorTok{-}\NormalTok{a)}\OperatorTok{/}\NormalTok{(Ka}\OperatorTok{-}\NormalTok{a)}\OperatorTok{/}\NormalTok{(b}\OperatorTok{-}\NormalTok{a)}\OperatorTok{*}\KeywordTok{exp}\NormalTok{(}\OperatorTok{-}\NormalTok{a}\OperatorTok{*}\NormalTok{T1) }\OperatorTok{+}\StringTok{ }
+\StringTok{                    }\NormalTok{(k21}\OperatorTok{-}\NormalTok{b)}\OperatorTok{/}\NormalTok{(Ka}\OperatorTok{-}\NormalTok{b)}\OperatorTok{/}\NormalTok{(a}\OperatorTok{-}\NormalTok{b)}\OperatorTok{*}\KeywordTok{exp}\NormalTok{(}\OperatorTok{-}\NormalTok{b}\OperatorTok{*}\NormalTok{T1) }\OperatorTok{+}\StringTok{ }
+\StringTok{                    }\NormalTok{(k21}\OperatorTok{-}\NormalTok{Ka)}\OperatorTok{/}\NormalTok{(a}\OperatorTok{-}\NormalTok{Ka)}\OperatorTok{/}\NormalTok{(b}\OperatorTok{-}\NormalTok{Ka)}\OperatorTok{*}\KeywordTok{exp}\NormalTok{(}\OperatorTok{-}\NormalTok{Ka}\OperatorTok{*}\NormalTok{T1)) }\CommentTok{# Erratum in eq 14:1}
+  
+  \KeywordTok{return}\NormalTok{(Co)}
+\NormalTok{\}}
+
+\NormalTok{r1 <-}\StringTok{ }\KeywordTok{nlr}\NormalTok{(fPK14a, dPK14, }
+          \DataTypeTok{pNames=}\KeywordTok{c}\NormalTok{(}\StringTok{"Vc/F"}\NormalTok{, }\StringTok{"Ka"}\NormalTok{, }\StringTok{"k21"}\NormalTok{, }\StringTok{"alpha"}\NormalTok{, }\StringTok{"beta"}\NormalTok{), }
+          \DataTypeTok{IE=}\KeywordTok{c}\NormalTok{(}\DecValTok{350}\NormalTok{, }\DecValTok{11}\NormalTok{, }\DecValTok{1}\NormalTok{, }\FloatTok{0.1}\NormalTok{, }\FloatTok{0.01}\NormalTok{))}
+
+\NormalTok{r1}\OperatorTok{$}\NormalTok{Est}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         Vc/F        Ka         k21     alpha        beta AddErrVar
+## PE  43.63080  2.349584   0.6979441  2.346109   0.3973269 537.19125
+## SE  40.60547  2.222099   0.9644243  2.221849   0.4937935 203.03693
+## RSE 93.06606 94.574121 138.1807351 94.703582 124.2789064  37.79602
+##      AddErrSD
+## PE  23.177387
+## SE   4.380065
+## RSE 18.898011
+\end{verbatim}
+
+\hypertarget{compartmental-analysis-with-tlag-1}{%
+\section{Compartmental analysis with Tlag}\label{compartmental-analysis-with-tlag-1}}
+
+경구 투여 일구획 분석, 지연시간이 있는 모형입니다. Ka, V, k21, alpha, beta 에 Tlag가 추가되어 농도를 나타낼 수 있습니다.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{## with lag}
+\NormalTok{fPK14b =}\StringTok{ }\ControlFlowTok{function}\NormalTok{(THETA)}
+\NormalTok{\{}
+\NormalTok{  Vc  =}\StringTok{ }\NormalTok{THETA[}\DecValTok{1}\NormalTok{]}
+\NormalTok{  Ka  =}\StringTok{ }\NormalTok{THETA[}\DecValTok{2}\NormalTok{]}
+\NormalTok{  k21 =}\StringTok{ }\NormalTok{THETA[}\DecValTok{3}\NormalTok{]}
+\NormalTok{  a   =}\StringTok{ }\NormalTok{THETA[}\DecValTok{4}\NormalTok{] }\CommentTok{# alpha}
+\NormalTok{  b   =}\StringTok{ }\NormalTok{THETA[}\DecValTok{5}\NormalTok{] }\CommentTok{# beta}
+\NormalTok{  TL  =}\StringTok{ }\NormalTok{THETA[}\DecValTok{6}\NormalTok{] }\CommentTok{# Tlag}
+  
+\NormalTok{  T1 =}\StringTok{ }\NormalTok{e}\OperatorTok{$}\NormalTok{DATA[,}\StringTok{"TIME"}\NormalTok{]}
+\NormalTok{  Co =}\StringTok{ }\NormalTok{Ka}\OperatorTok{*}\NormalTok{Dpo}\OperatorTok{/}\NormalTok{Vc}\OperatorTok{*}\NormalTok{((k21}\OperatorTok{-}\NormalTok{a)}\OperatorTok{/}\NormalTok{(Ka}\OperatorTok{-}\NormalTok{a)}\OperatorTok{/}\NormalTok{(b}\OperatorTok{-}\NormalTok{a)}\OperatorTok{*}\KeywordTok{exp}\NormalTok{(}\OperatorTok{-}\NormalTok{a}\OperatorTok{*}\NormalTok{(T1}\OperatorTok{-}\NormalTok{TL)) }\OperatorTok{+}\StringTok{ }
+\StringTok{                    }\NormalTok{(k21}\OperatorTok{-}\NormalTok{b)}\OperatorTok{/}\NormalTok{(Ka}\OperatorTok{-}\NormalTok{b)}\OperatorTok{/}\NormalTok{(a}\OperatorTok{-}\NormalTok{b)}\OperatorTok{*}\KeywordTok{exp}\NormalTok{(}\OperatorTok{-}\NormalTok{b}\OperatorTok{*}\NormalTok{(T1}\OperatorTok{-}\NormalTok{TL)) }\OperatorTok{+}\StringTok{ }
+\StringTok{                    }\NormalTok{(k21}\OperatorTok{-}\NormalTok{Ka)}\OperatorTok{/}\NormalTok{(a}\OperatorTok{-}\NormalTok{Ka)}\OperatorTok{/}\NormalTok{(b}\OperatorTok{-}\NormalTok{Ka)}\OperatorTok{*}\KeywordTok{exp}\NormalTok{(}\OperatorTok{-}\NormalTok{Ka}\OperatorTok{*}\NormalTok{(T1}\OperatorTok{-}\NormalTok{TL))) }
+\NormalTok{  Co[Co }\OperatorTok{<}\StringTok{ }\DecValTok{0}\NormalTok{] =}\StringTok{ }\DecValTok{0} \CommentTok{# remove negative concentrationss before tlag}
+  
+  \KeywordTok{return}\NormalTok{(Co)}
+\NormalTok{\}}
+
+\NormalTok{r2 <-}\StringTok{ }\KeywordTok{nlr}\NormalTok{(fPK14b, dPK14, }
+          \DataTypeTok{pNames=}\KeywordTok{c}\NormalTok{(}\StringTok{"Vc/F"}\NormalTok{, }\StringTok{"Ka"}\NormalTok{, }\StringTok{"k21"}\NormalTok{, }\StringTok{"alpha"}\NormalTok{, }\StringTok{"beta"}\NormalTok{, }\StringTok{"Tlag"}\NormalTok{), }
+          \DataTypeTok{IE=}\KeywordTok{c}\NormalTok{(}\DecValTok{150}\NormalTok{, }\DecValTok{11}\NormalTok{, }\FloatTok{0.12}\NormalTok{, }\FloatTok{0.1}\NormalTok{, }\FloatTok{0.01}\NormalTok{, }\FloatTok{0.05}\NormalTok{))}
+\NormalTok{r2}\OperatorTok{$}\NormalTok{Est}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          Vc/F        Ka          k21      alpha         beta        Tlag
+## PE  88.530347 19.777685    0.0079704 0.73178583 2.021746e-03 0.121649379
+## SE   2.318778  3.774496    0.1245099 0.04591788 1.130516e-01 0.008133633
+## RSE  2.619190 19.084619 1562.1537739 6.27477041 5.591779e+03 6.686127672
+##     AddErrVar   AddErrSD
+## PE  17.889619  4.2296122
+## SE   6.848254  0.8095605
+## RSE 38.280600 19.1403000
+\end{verbatim}
+
+\hypertarget{modeling-result-2}{%
+\section{Modeling Result}\label{modeling-result-2}}
+
+지연 시간이 있는 모형의 적합이 더 좋은 것을 알 수 있습니다. Cmax 부분을 주의깊게 살펴보세요.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(dPK14[,}\StringTok{"TIME"}\NormalTok{], dPK14[,}\StringTok{"DV"}\NormalTok{], }\DataTypeTok{xlim=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{25}\NormalTok{), }\DataTypeTok{ylim=}\KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{250}\NormalTok{), }\DataTypeTok{xlab=}\StringTok{"Time (min)"}\NormalTok{, }\DataTypeTok{ylab=}\StringTok{"Concentration (ug/L)"}\NormalTok{, }\DataTypeTok{pch=}\DecValTok{16}\NormalTok{)}
+\NormalTok{TIME =}\StringTok{ }\NormalTok{dPK14[,}\StringTok{"TIME"}\NormalTok{]}
+\KeywordTok{lines}\NormalTok{(TIME, }\KeywordTok{fPK14a}\NormalTok{(r1}\OperatorTok{$}\NormalTok{Est[}\StringTok{"PE"}\NormalTok{, }\DecValTok{1}\OperatorTok{:}\DecValTok{5}\NormalTok{]), }\DataTypeTok{lty=}\DecValTok{2}\NormalTok{)}
+\KeywordTok{lines}\NormalTok{(TIME, }\KeywordTok{fPK14b}\NormalTok{(r2}\OperatorTok{$}\NormalTok{Est[}\StringTok{"PE"}\NormalTok{, }\DecValTok{1}\OperatorTok{:}\DecValTok{6}\NormalTok{]))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{handout_files/figure-latex/unnamed-chunk-14-1.pdf}
+
+\hypertarget{refs}{}
+\leavevmode\hypertarget{ref-R-wnl}{}%
+Bae, Kyun-Seop. 2018. \emph{Wnl: Minimization Tool for Pharmacokinetic-Pharmacodynamic Data Analysis}. \url{https://CRAN.R-project.org/package=wnl}.
+
+\leavevmode\hypertarget{ref-gab}{}%
+Gabrielsson, Johan. 2016. \emph{Pharmacokinetic and Pharmacodynamic Data Analysis : Concepts and Applications}. Stockholm: Apotekarsocieteten.
 
 \end{document}
