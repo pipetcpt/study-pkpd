@@ -10,16 +10,30 @@ link-citations: yes
 colorlinks: yes
 lot: yes
 lof: yes
-fontsize: 12pt
 monofont: "Source Code Pro"
 monofontoptions: "Scale=0.7"
 site: bookdown::bookdown_site
 description: ""
 url: 'https\://study-pkpd.netlify.com/'
 github-repo: shanmdphd/wnl
-#cover-image: images/cover.jpg
-editor_options: 
-  chunk_output_type: console
+fontsize: 9pt
+header-includes:
+  - \usepackage{kotex}
+output:
+  bookdown::pdf_book: 
+    keep_tex: yes
+    pandoc_args: --top-level-division=chapter
+    toc_depth: 3
+    toc_unnumbered: no
+    toc_appendix: yes
+    template: null
+    #dev: "cairo_pdf"
+     #latex_engine: xelatex
+    latex_engine: pdflatex
+    #includes:
+    #  in_header: latex/preamble.tex
+    #  before_body: latex/before_body.tex
+    #  after_body: latex/after_body.tex
 ---
 
 ```{r setup, include = FALSE}
